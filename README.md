@@ -364,25 +364,7 @@ width: 200px
 
 次のように表示されます。
 
-<table>
-  <caption>イベント概要</caption>
-  <tr>
-    <th>イベント名</th>
-    <td>HRzine Day 2020 Autumn</td>
-  </tr>
-  <tr>
-    <th>テーマ</th>
-    <td>ニューノーマルが来た！〜人事・労務がいま整えるべきこと〜</td>
-  </tr>
-  <tr>
-    <th>日時</th>
-    <td>2020年10月21日(水) 13:00～18:35</td>
-  </tr>
-  <tr>
-    <th>会場</th>
-    <td>オンライン</td>
-  </tr>
-</table>
+![dtable](https://user-images.githubusercontent.com/24837059/94995269-32e6e680-05d8-11eb-86ed-074e650ff2eb.png)
 
 #### ■スタイルの書き方
 
