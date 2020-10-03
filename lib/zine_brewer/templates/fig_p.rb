@@ -20,7 +20,7 @@ class Fig_P < Mustache
   {{#imgs_list}}
   <img src="{{fig_src}}" alt="{{name}}氏" {{& img_style}} />
   {{/imgs_list}}
-  <div style="text-align:left; padding:0em 2em;">
+  <div style="text-align:left; padding:0px 35px;">
     <figcaption><strong>{{name}}（{{huri}}）氏</strong></figcaption>
     <figcaption markdown="span">{{caption}}</figcaption>
   </div>
