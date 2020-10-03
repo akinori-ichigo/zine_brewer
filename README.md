@@ -368,6 +368,55 @@ width: 200px
 
 #### ■スタイルの書き方
 
+最後に、スタイルの記述方法を説明します。
+
+Kramdown（拡張Markdown）では、文字や段落にHTMLの属性を付けることができます。例えば、次のように記述すると、太字部分が赤色になり下線も引かれます。
+
+```
+ここは次の試験で**必ず出題する**{:style="color:red; text-decoration:underline;"}ところだから、しっかり勉強してきなさい。
+```
+
+これは、`**必ず出題する**{:style="color:red; text-decoration:underline;"}`という部分は、`<strong style="color:red; text-decoration:underline;">必ず出題する</strong>`と変換されるためです。
+
+ZineBrewerでは、styleのところをもう少し簡潔に書けるようにしてあります。style属性中の指定**一つひとつ**を、パーセント記号とセミコロンで括ります。
+
+```
+ここは次の試験で**必ず出題する**{:%color:red; %text-decoration:underline;}ところだから、しっかり勉強してきなさい。
+```
+
+また、太字にしないで、ただ赤字・下線引きにしたい場合には、次のように記述します。
+
+```
+ここは次の試験で[[必ず出題する]]{:%color:red; %text-decoration:underline;}ところだから、しっかり勉強してきなさい。
+```
+
+段落に対してスタイルを当てる場合には、段落の直前あるいは直後にスタイルを記述します。例えば、次のように記述すると、段落の背景に薄い赤色に敷くことができます（余白も少しとっています）。
+
+```
+{:%background-color:#ffe6e6; %padding:15px;}
+ここは次の試験で必ず出題するところだから、しっかり勉強してきなさい。
+```
+
+行頭の丸数字などを頭出し（ぶら下げ）したいことがあると思いますが、それは次のように記述します。
+
+```
+{:%padding-left:1em; %text-indent:-1em;}
+①このように書いてやると、「①」の部分だけ左につきだし、以降の文章が引っ込んだ形で表示できます。
+```
+
+![Hanging Indent](https://user-images.githubusercontent.com/24837059/94996073-59f3e700-05dd-11eb-87f7-8a16be840f6f.png)
+
+#### id属性、class属性、その他の属性
+
+Kramdown（拡張Markdown）の`{: }`の中には、次のようにしてid属性とclass属性を記述できます。
+
+```
+{:#id_1234 .footnotes}
+id属性は#、class属性は.を使って記述できます。
+```
+
+その他の属性はstyle以外、略記方法はありませんが、HTMLと同様に`{:rel="lightbox}"`とイコールを使った書き方にすれば、何でも指定できます。
+
 ## License
 
 The gem is available as open source under the terms of the [MIT License](https://opensource.org/licenses/MIT).
