@@ -82,7 +82,7 @@ ZineBrewerで扱う原稿は「ヘッダー」と「本文」に分かれます�
 
 上記例をZineBrewerで変換した場合、ヘッダーは次のように出力されます。
 
-```:proof/header.txt
+```html:proof/header.txt
 ［タイトル］
 原稿はZineBrewerで書こう！ スタイルも適用できるよ
 
