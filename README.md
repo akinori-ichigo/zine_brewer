@@ -20,7 +20,7 @@ Or install it yourself as:
 
 ## Usage
 
-    $ zine_brewer [kramdown_document]
+    $ zine_brewer [kramdown_document_filename]
 
 ## Enhanced Notation in ZineBrewer
 
@@ -79,6 +79,27 @@ ZineBrewerで扱う原稿は「ヘッダー」と「本文」に分かれます�
 ヘッダーと本文の境界には、本文ページの起こしを指示する`<%-- page -->`を記述します。
 
 ヘッダーの最後に記述する`■記事ID■：0000`は、原稿を入れているフォルダの名前を記事IDにしている場合を除き、記述するようにしてください。
+
+上記例をZineBrewerで変換した場合、ヘッダーは次のように出力されます。
+
+```:proof/header.txt
+［タイトル］
+原稿はZineBrewerで書こう！ スタイルも適用できるよ
+
+［リード］
+<p>　もともと、Markdown原稿にCSSスタイルを書き込んでおく方法はないかと思い、  
+見つけたのがKramdownです。文字単位・段落単位でidやclass、各種属性を記述  
+しておくことができました。ただし、Kramdownが出力するHTMLは、翔泳社の  
+記事配信システムが受け付けるHTMLフォーマットとは少し異なる部分があります。  
+そこで、Kramdownを拡張し、翔泳社の記事配信システムが受け付けるHTMLを出力  
+するようにしたツールが、ZineBrewerです。</p>
+
+［タイトル画像］
+1234_title.png
+
+［著者クレジット］
+市古 明典
+```
 
 ## License
 
