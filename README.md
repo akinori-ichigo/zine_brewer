@@ -296,7 +296,7 @@ width: 450px
 ===wraparound
 
 {:.imgR}
-<<Fig_A>>
+<<Fig_N>>
 src: 1234_fig.png
 width: 200px
 
@@ -313,7 +313,7 @@ width: 200px
 ===wraparound
 
 {:.imgR}
-<<Fig_A>>
+<<Fig_N>>
 src: 1234_fig.png
 width: 200px
 
