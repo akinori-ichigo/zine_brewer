@@ -20,7 +20,7 @@ Or install it yourself as:
 
 ## Usage
 
-    $ zine_brewer [kramdown_document_filename]
+    $ zine_brewer [kramdown_document_filepath]
 
 * The header part is converted and written out as "proof/header.txt".
 * The body part is converted and written out as "proof/body.txt".
