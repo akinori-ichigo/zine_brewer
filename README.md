@@ -22,11 +22,16 @@ Or install it yourself as:
 
     $ zine_brewer [kramdown_document_filename]
 
+* The header part is converted and written out as "proof/header.txt".
+* The body part is converted and written out as "proof/body.txt".
+
 ## Enhanced Notation in ZineBrewer
 
 ここでは、Kramdown（拡張Markdown）に加えて記述可能にした、ZineBrewer向けの記法を説明します。
 
 ZineBrewerで扱う原稿は「ヘッダー」と「本文」に分かれます。以下ではそれぞれ説明します。
+
+なお、ZineBrewerは変換したヘッダー、本文をそれぞれheader.txt、body.txtとして、proofフォルダに格納します。
 
 ### ヘッダー
 
@@ -80,9 +85,9 @@ ZineBrewerで扱う原稿は「ヘッダー」と「本文」に分かれます�
 
 ヘッダーの最後に記述する`■記事ID■：0000`は、原稿を入れているフォルダの名前を記事IDにしている場合を除き、記述するようにしてください。
 
-上記例をZineBrewerで変換した場合、ヘッダーは次のように出力されます。
+上記例をZineBrewerで変換した場合、ヘッダーは次のように出力されます（proof/header.txt）。
 
-```xml:proof/header.txt
+```
 ［タイトル］
 原稿はZineBrewerで書こう！ スタイルも適用できるよ
 
