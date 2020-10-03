@@ -106,8 +106,6 @@ module ZineBrewer
 
       ### Sets pre process
       dkmn.pre_process = lambda do |t|
-        t.gsub!(/\n\K={2,}div/, "<div markdown=\"1\">")
-        t.gsub!(/\n\K={2,}\/div/, "</div>")
       end
 
       ### Sets post process
