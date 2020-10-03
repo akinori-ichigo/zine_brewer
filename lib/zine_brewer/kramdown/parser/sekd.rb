@@ -28,7 +28,7 @@ module Kramdown
           end
         end
 
-        @block_parsers.insert(5, :column, :definition_table, :div, :page)
+        @block_parsers.insert(5, :column, :definition_table, :wraparound,:div, :page)
         @span_parsers.insert(5, :span)
 
         @page = 0
@@ -83,6 +83,23 @@ module Kramdown
 
       DIV_MATCH = /^={3,}\s*?div\s*?\n(.*?)^={2,}\/div\s*?\n/mi
       define_parser(:div, /^={3,}div/i, nil, 'parse_div')
+
+      def parse_wraparound
+        if @src.check(self.class::WRAPAROUND_MATCH)
+          start_line_number = @src.current_line_number
+          @src.pos += @src.matched_size
+          el = Element.new(:div, nil, {'class' => 'imgLRBlock cf'}, :location => start_line_number)
+          parse_blocks(el, @src[1])
+          update_attr_with_ial(el.attr, @block_ial) unless @block_ial.nil?
+          @tree.children << el
+          true
+        else
+          false
+        end
+      end
+
+      WRAPAROUND_MATCH = /^={3,}\s*?wraparound\s*?\n(.*?)^={2,}\/wraparound\s*?\n/mi
+      define_parser(:wraparound, /^={3,}wrap/i, nil, 'parse_wraparound')
 
       def parse_column
         if @src.check(self.class::COLUMN_MATCH)
