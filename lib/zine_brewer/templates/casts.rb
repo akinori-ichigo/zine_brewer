@@ -1,5 +1,7 @@
 # coding: utf-8
 
+require 'mustache'
+
 class Casts < Mustache
 
   # <<Casts>>

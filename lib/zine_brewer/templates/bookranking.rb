@@ -1,5 +1,7 @@
 # coding: utf-8
 
+require 'mustache'
+
 class BookRanking < Mustache
 
   # <<BookRanking>>

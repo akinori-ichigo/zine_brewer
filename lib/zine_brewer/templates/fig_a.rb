@@ -1,5 +1,7 @@
 # coding: utf-8
 
+require 'mustache'
+
 require_relative 'fig/module_fig_base'
 require_relative 'fig/module_fig_plus'
 
