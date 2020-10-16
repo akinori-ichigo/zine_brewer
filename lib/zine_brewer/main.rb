@@ -20,8 +20,7 @@ module ZineBrewer
         Encoding.default_external =  Kconv.guess(File.open(path, 'r:BINARY').read)
         input_data = File.open(path, 'rt').read.encode('UTF-8')
       rescue
-        puts 'ERROR: There is not the input file. Check the input file.'
-        exit
+        raise 'ERROR: The input file does not exist. Check it.'
       end
 
       @dir = File.dirname(path)
