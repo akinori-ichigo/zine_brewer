@@ -1,9 +1,6 @@
-# frozen_string_literal: true
-
 source "https://rubygems.org"
 
-git_source(:github) {|repo_name| "https://github.com/#{repo_name}" }
+# Specify your gem's dependencies in zine_brewer.gemspec
+gemspec
 
-gem "mustache"
-gem "darkmouun"
-
+gem "rake", "~> 12.0"
