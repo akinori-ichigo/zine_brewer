@@ -20,7 +20,17 @@ Or install it yourself as:
 
 ## Usage
 
+As the converting command:
+
     $ zine_brewer [kramdown_document_filepath]
+
+As the converting server:
+
+    $ zine_brewing_server
+
+When you run the command above,
+or send kramdown_document_filepath to the zine_brewing_server,
+the convertion is done as below.
 
 * The header part is converted and written out as "proof/header.txt".
 * The body part is converted and written out as "proof/body.txt".
