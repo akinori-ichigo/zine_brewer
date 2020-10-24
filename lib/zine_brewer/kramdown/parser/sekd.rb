@@ -36,6 +36,8 @@ module Kramdown
         @fn_number = Hash.new{|h, k| h[k] = (@fn_counter += 1).to_s }
       end
 
+      LIST_START_OL = /^(#{OPT_SPACE}(?:[^\\]|)\d+\.)(#{PATTERN_TAIL})/
+
       # Parse the fenced codeblock at the current location
       # code highlighting by Google Prettify.
       def parse_codeblock_fenced_sekd

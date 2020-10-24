@@ -86,7 +86,12 @@ module Kramdown
           end
         format_as_indented_block_html('table', el.attr, rows, indent)
       end
-      
+
+      def convert_dt(el, indent)
+        result = super
+        result.sub(/<dt>\\/, '<dt>')
+      end
+
       def convert_div(el, indent)
         format_as_indented_block_html('div', el.attr, inner(el, indent), indent)
       end
