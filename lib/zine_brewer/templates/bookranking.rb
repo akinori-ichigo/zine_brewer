@@ -25,7 +25,8 @@ EOT
   def cover
     case File.dirname(src)
     when ".", "images"
-      "/static/images/article/■記事ID■/#{File.basename(src)}"
+      f = File.basename(l_src)
+      "/static/images/article/■記事ID■/#{/^\d+_/ =~ f ? f : '■記事ID■_' + f}"
     when "common"
       "/static/images/article/common/#{File.basename(src)}"
     else
