@@ -3,11 +3,10 @@
 require 'mustache'
 
 require_relative 'fig/module_fig_base'
-require_relative 'fig/module_fig_plus'
 
 class Fig_H < Mustache
 
-  include Fig_00, Fig_01
+  include Fig_00
 
   # <<Fig_H>>
   # src: 画像ファイル名
@@ -19,9 +18,9 @@ class Fig_H < Mustache
   @template = <<EOT
 <figure>
   {{#imgs_list}}
-  {{#href}}<a href="{{href}}" target="_blank">{{/href}}<img src="{{fig_src}}" alt="{{alt}}" {{& img_style}}/>{{#href}}</a>{{/href}}
+  <a href="{{href}}" target="_blank"><img src="{{fig_src}}" loading="lazy" alt="{{alt}}"{{#width}} width="{{width}}"{{/width}}{{#height}} height="{{height}}"{{/height}} /></a>
   {{/imgs_list}}
-  {{#figcaption_sw}}<figcaption markdown="span">{{& caption}}</figcaption>{{/figcaption_sw}}
+  {{#caption}}<figcaption markdown="span">{{& caption}}</figcaption>{{/caption}}
 </figure>
 EOT
 
