@@ -121,10 +121,6 @@ module Kramdown
         format_as_span_html(el.type, attr, res)
       end
 
-      def convert_span(el, indent)
-        format_as_span_html('span', el.attr, inner(el, indent))
-      end
-
       def convert_em(el, indent)
         format_as_span_html('strong', el.attr, inner(el, indent))
       end

@@ -29,7 +29,6 @@ module Kramdown
         end
 
         @block_parsers.insert(5, :column, :definition_table, :wraparound,:div, :page)
-        @span_parsers.insert(5, :span)
 
         @page = 0
         @fn_counter = 0
@@ -159,7 +158,7 @@ module Kramdown
         if @fn_number.has_key?(@src[1])
           warning("Duplicate footnote name '#{@src[1]}' on line #{start_line_number} - overwriting")
         end
-        a = %!<a href="#fnref:#{@fn_number[@src[1]]}">[#{@fn_number[@src[1]]}]</a>: #{@src[2].strip}!
+        a = %!<a href="#fnref:#{@fn_number[@src[1]]}">\\[#{@fn_number[@src[1]]}\\]</a>: #{@src[2].strip}!
         p = new_block_el(:p, nil, {'id' => "fn:#{@fn_number[@src[1]]}"})
         p.children << new_block_el(:raw_text, a, nil)
         if @tree.children.last.type == :footnote_definition_sekd
