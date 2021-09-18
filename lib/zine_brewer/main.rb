@@ -126,9 +126,10 @@ module ZineBrewer
       dkmn.convert
     end
 
-    ### puts the hash of instance variables for test
-    # def inspect
-    # end
+    ### pretty print of the converted document
+    def pretty_print
+      @pp_header + "\n\n" + @converted
+    end
   end
 end
 
