@@ -75,10 +75,12 @@ module Kramdown
       end
 
       def convert_definition_table(el, indent)
+        th_width = el.attr.delete('th-width')
+        th = th_width.nil? ? "<th>" : "<th width=\"#{th_width}\">"
         raw_caption = el.attr.delete('caption')
         rows = raw_caption.nil? ? '' : table_caption(raw_caption)
         inner(el.children.first, indent).scan(/(<dt>.+?<\/dt>|<dd>.+?<\/dd>)/m).
-          map{|x| x.first.sub(/\A<dt>(.+)<\/dt>\z/m, "<th>\\1</th>")}.
+          map{|x| x.first.sub(/\A<dt>(.+)<\/dt>\z/m, "#{th}\\1</th>")}.
           map{|x| x.sub(/\A<dd>(.+)<\/dd>\z/m, "<td>\\1</td>")}.
           each_slice(2) do |x|
             row = x.map{|c| ('  '*(indent + 2)) + c}.join("\n")
