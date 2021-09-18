@@ -49,6 +49,7 @@ module ZineBrewer
       @author = set_header_item(h[4], '著者 クレジット')
       @css    = set_header_item(h[5], '')
 
+      @pp_header = make_pp_header
       @converted = convert(body)
     end
 
@@ -60,6 +61,17 @@ module ZineBrewer
         target.define_singleton_method(:is_complete?){ true }
         target
       end
+    end
+
+    def make_pp_header
+      header_output = []
+      header_output << "［コーナー］\n#{@corner}" if @corner.is_complete?
+      header_output << "［タイトル］\n#{@title}" if @title.is_complete?
+      header_output << "［リード］\n<p>#{@lead}</p>" if @lead.is_complete?
+      header_output << "［タイトル画像］\n#{@pic}" if @pic.is_complete?
+      header_output << "［著者クレジット］\n#{@author}" if @author.is_complete?
+      header_output << "［追加CSS］\n#{@css}" if @css.is_complete?
+      header_output.join("\n\n")
     end
 
     ## Writing out header and body to each file
@@ -78,15 +90,8 @@ module ZineBrewer
     end
 
     def write_proof_header
-      header_output = ""
-      header_output << "［コーナー］\n#{@corner}\n\n" if @corner.is_complete?
-      header_output << "［タイトル］\n#{@title}\n\n" if @title.is_complete?
-      header_output << "［リード］\n<p>#{@lead}</p>\n\n" if @lead.is_complete?
-      header_output << "［タイトル画像］\n#{@pic}\n\n" if @pic.is_complete?
-      header_output << "［著者クレジット］\n#{@author}\n\n" if @author.is_complete?
-      header_output << "［追加CSS］\n#{@css}\n\n" if @css.is_complete?
       File.open("#{@proof_dir}/header.txt", 'wb') do |f|
-        f.write(header_output)
+        f.write(@pp_header)
       end
     end
 
@@ -120,6 +125,10 @@ module ZineBrewer
       ### Converts a markdown document and returns that converted body
       dkmn.convert
     end
+
+    ### puts the hash of instance variables for test
+    # def inspect
+    # end
   end
 end
 
