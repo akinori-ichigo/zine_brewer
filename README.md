@@ -376,7 +376,7 @@ width: 200px
 
 次のように表示されます。
 
-![dtable](https://user-images.githubusercontent.com/24837059/94995269-32e6e680-05d8-11eb-86ed-074e650ff2eb.png)
+![dtable](https://user-images.githubusercontent.com/24837059/133894991-59887c24-3c2f-402d-a854-b56c55d7da8c.png)
 
 #### ■スタイルの書き方
 
