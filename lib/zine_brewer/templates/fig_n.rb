@@ -13,12 +13,11 @@ class Fig_N < Mustache
   # width: 画像幅
   # height: 画像高さ
   # cap: キャプション
-  # from: 出典 << 出典URL
 
   @template = <<EOT
 <figure>
   {{#imgs_list}}
-  <img src="{{fig_src}}" loading="lazy" alt="{{alt}}"{{#width}} width="{{width}}"{{/width}}{{#height}} height="{{height}}"{{/height}} />
+  <img src="{{fig_src}}" loading="lazy" alt="{{alt}}" {{& img_style}} />
   {{/imgs_list}}
   {{#caption}}<figcaption markdown="span">{{caption}}</figcaption>{{/caption}}
 </figure>

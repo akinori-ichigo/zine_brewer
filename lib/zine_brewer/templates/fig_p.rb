@@ -20,7 +20,7 @@ class Fig_P < Mustache
   @template = <<EOT
 <figure>
   {{#imgs_list}}
-  <img src="{{fig_src}}" loading="lazy" alt="{{name}}氏"{{#width}} width="{{width}}"{{/width}}{{#height}} height="{{height}}"{{/height}} />
+  <img src="{{fig_src}}" loading="lazy" alt="{{name}}氏" {{& img_style}} />
   {{/imgs_list}}
   <div style="text-align:left; padding:0px 35px;">
     <figcaption><strong>{{name}}（{{huri}}）氏</strong></figcaption>

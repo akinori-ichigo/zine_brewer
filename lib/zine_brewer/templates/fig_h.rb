@@ -18,7 +18,7 @@ class Fig_H < Mustache
   @template = <<EOT
 <figure>
   {{#imgs_list}}
-  <a href="{{href}}" target="_blank"><img src="{{fig_src}}" loading="lazy" alt="{{alt}}"{{#width}} width="{{width}}"{{/width}}{{#height}} height="{{height}}"{{/height}} /></a>
+  <a href="{{href}}" target="_blank"><img src="{{fig_src}}" loading="lazy" alt="{{alt}}" {{& img_style}} /></a>
   {{/imgs_list}}
   {{#caption}}<figcaption markdown="span">{{& caption}}</figcaption>{{/caption}}
 </figure>

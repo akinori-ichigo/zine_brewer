@@ -10,7 +10,8 @@ module Fig_00
       a_img[:fig_src] = make_src(h["src"])
       a_img[:href] = h["href"]
       a_img[:alt] = make_alt(h["alt"])
-      a_img[:img_size] = make_img_size(h["width"], h["height"])
+      a_img[:img_style] = make_img_style(h["width"], h["height"]) \
+        unless h["width"].nil? && h["height"].nil?
       result << a_img
     end
     result
@@ -53,11 +54,13 @@ module Fig_00
     end
   end
   
-  def make_img_size(l_width, l_height)
+  def make_img_style(l_width, l_height)
     s = []
-    s << %Q{width="#{l_width}"} unless l_width.nil?
-    s << %Q{height="#{l_height}"} unless l_height.nil?
-    s.join(' ').strip
+    s << "width:#{l_width};" unless l_width.nil?
+    s << "height:#{l_height};" unless l_height.nil?
+    unless s.all?{|v| v.nil? }
+      %Q{style="#{s.join(' ').strip}" }
+    end
   end
 
 end

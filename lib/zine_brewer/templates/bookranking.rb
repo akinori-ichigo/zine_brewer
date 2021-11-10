@@ -13,7 +13,7 @@ class BookRanking < Mustache
   @template = <<EOT
   <div class="imgLRBlock cf">
     <figure class="imgR">
-      <a href="{{url}}" target="_blank"><img alt="{{title}}" loading="lazy" src="{{cover}}" style="border:1px solid #808080;" width="100" title="{{title}}" /></a></figure>
+      <a href="{{url}}" target="_blank"><img alt="{{title}}" loading="lazy" src="{{cover}}" style="border:1px solid #808080; width:100px;" title="{{title}}" /></a></figure>
     <p markdown="1">　{{& description}}</p>
   </div>
 EOT
