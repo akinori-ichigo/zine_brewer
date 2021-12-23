@@ -10,22 +10,26 @@ class Fig_P < Mustache
 
   # <<Fig_P>>
   # src: 画像ファイル名
-  # name: 姓 名
-  # huri: ふり・がな
   # width: 画像幅
   # height: 画像高さ
+  # name: 姓 名
+  # huri: ふり・がな
+  # title: 肩書き
   # cap: |
-  #  キャプション
+  #      プロフィール
 
   @template = <<EOT
 <figure>
   {{#imgs_list}}
   <img src="{{fig_src}}" loading="lazy" alt="{{name}}氏" {{& img_style}} />
   {{/imgs_list}}
-  <div style="text-align:left; padding:0px 35px;">
-    <figcaption><strong>{{name}}（{{huri}}）氏</strong></figcaption>
-    <figcaption markdown="span">{{caption}}</figcaption>
-  </div>
+  <figcaption style="text-align:left;">
+    <strong>{{name}}（{{huri}}）氏</strong><br/>
+    <span markdown="span">{{title}}</span>
+    <div markdown="span" style="margin-top:6px;">
+      {{{caption}}}
+    </div>
+  </figcaption>
 </figure>
 EOT
 
