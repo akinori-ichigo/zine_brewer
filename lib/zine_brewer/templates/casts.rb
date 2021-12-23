@@ -13,7 +13,7 @@ class Casts < Mustache
   #   cap:   プロフィール
 
   # CSSに下記の登録が必要
-  # article#contents div.article div.casts>div ~ div { margin-top:8px; }
+  # .c-article_content div.casts>div ~ div { margin-top:8px; }
 
   @template = <<EOT
   <div class="casts" style="margin-bottom:30px; padding:13px 13px 3px; border:solid 2px #eee;">
@@ -68,7 +68,7 @@ EOT
   
   def make_caption(l_cap)
     begin
-      l_cap.chomp.sub(/^\\/, '').gsub(/\n/, '(((BR)))')
+      l_cap.chomp.sub(/^\\/, '').gsub(/\n/, '<br/>')
     rescue
       nil
     end

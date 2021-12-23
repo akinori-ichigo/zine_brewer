@@ -19,7 +19,7 @@ module Fig_00
 
   def caption
     begin
-      cap.chomp.sub(/^\\/, '').gsub(/\n/,'(((BR)))')
+      cap.chomp.sub(/^\\/, '').gsub(/\n/,'<br/>')
     rescue
       nil
     end
