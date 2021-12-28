@@ -1,6 +1,6 @@
 # ZineBrewer
 
-ZineBrewer converts Kramdown (=exhanced Markdown) document to HTML for Shoeisha Web Media.
+ZineBrewer converts Kramdown (=exhanced Markdown) document to HTML for a web media.
 
 ## Installation
 
