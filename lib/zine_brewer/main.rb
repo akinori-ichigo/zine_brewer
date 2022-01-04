@@ -42,7 +42,7 @@ module ZineBrewer
 
       @article_id = $+ if header.sub!(/^■記事ID■[^0-9]+(\d+)$/, '')
       h = header.strip.split(/\n\n+/)
-      @corner = set_header_item(h[0], 'IT人材ラボの記事・ニュース')
+      @corner = set_header_item(h[0], '記事・ニュースのコーナー')
       @title  = set_header_item(h[1], 'タイトル' )
       @lead   = set_header_item(h[2], 'リード')
       @pic    = set_header_item(h[3], 'dummy.png')
@@ -54,7 +54,7 @@ module ZineBrewer
     end
 
     def set_header_item(target, default)
-      if /\A[\-%]+\Z/ =~ target || target.nil?
+      if /\A\ufeff?[\-%]+\Z/ =~ target || target.nil?
         default.define_singleton_method(:is_complete?){ false }
         default
       else
