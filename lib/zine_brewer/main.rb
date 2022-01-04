@@ -44,7 +44,7 @@ module ZineBrewer
       h = header.strip.split(/\n\n+/)
       @corner = set_header_item(h[0], '記事・ニュースのコーナー')
       @title  = set_header_item(h[1], 'タイトル' )
-      @lead   = set_header_item(h[2], 'リード')
+      @lead   = set_header_item(h[2], 'nil')
       @pic    = set_header_item(h[3], 'dummy.png')
       @author = set_header_item(h[4], '著者 クレジット')
       @css    = set_header_item(h[5], '')
