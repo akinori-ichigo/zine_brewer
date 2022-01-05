@@ -19,7 +19,7 @@ class Fig_N < Mustache
   {{#imgs_list}}
   <img src="{{fig_src}}" loading="lazy" alt="{{alt}}" {{& img_style}} />
   {{/imgs_list}}
-  {{#caption}}<figcaption markdown="span">{{caption}}</figcaption>{{/caption}}
+  {{#caption}}<figcaption markdown="span">{{& caption}}</figcaption>{{/caption}}
 </figure>
 EOT
 
