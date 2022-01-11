@@ -70,7 +70,7 @@ module ZineBrewer
       header_output << "［リード］\n<p>#{@lead}</p>" if @lead.is_complete?
       header_output << "［タイトル画像］\n#{@pic}" if @pic.is_complete?
       header_output << "［著者クレジット］\n#{@author}" if @author.is_complete?
-      header_output << "［追加CSS］\n#{@css}" if @css.is_complete?
+      header_output << "［追加CSS］\n#{@css.each_line.map{|i| '.c-article_content ' + i }.join}" if @css.is_complete?
       header_output.join("\n\n")
     end
 

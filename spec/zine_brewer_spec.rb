@@ -13,6 +13,11 @@ RSpec.describe ZineBrewer do
       eq File.open("spec/testfiles/01_whole.html").read.strip
   end
 
+  it "puts the header file" do
+    expect(ZineBrewer::Application.new("spec/testfiles/01_whole.txt").make_pp_header.strip).to \
+      eq File.open("spec/testfiles/01_header.txt").read.strip
+  end
+
   it "has the width attribute of <th> element at 1st column" do
     expect(ZineBrewer::Application.new("spec/testfiles/02_definition_table_th_width.txt").pretty_print.strip).to \
       eq File.open("spec/testfiles/02_definition_table_th_width.html").read.strip

@@ -8,7 +8,7 @@ cover.png
 
 清少納言
 
-.c-article_content .hot {:%color:red;}
+.haze { color:purple; }
 
 ■記事ID■：1234
 
@@ -27,7 +27,7 @@ casts:
 src: fig01.jpg
 width: 650px
 
-　[春は、あけぼの。]{:.hot %font-weight:bold;}やうやう白くなりゆく山ぎは少し明りて紫だちたる雲の細くたなびきたる。
+　[春は、あけぼの。]{:.hot %font-weight:bold;}やうやう白くなりゆく山ぎは少し明りて[紫だちたる雲]{:.haze}の細くたなびきたる。
 
 　夏は、夜。月の頃はさらなり。闇もなほ。螢の多く飛び違ひたる。また、ただ一つ二つなど、ほのかにうち光りて行くもをかし。雨など降るもをかし。
 
