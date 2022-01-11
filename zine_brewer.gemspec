@@ -6,7 +6,7 @@ Gem::Specification.new do |spec|
   spec.authors       = ["Akinori Ichigo"]
   spec.email         = ["akinori.ichigo@gmail.com"]
 
-  spec.summary       = %q{Kramdown to HTML converter for Shoeisha Web Media}
+  spec.summary       = %q{Kramdown to HTML converter for a web media}
   spec.homepage      = "https://github.com/akinori-ichigo/zine_brewer"
   spec.license       = "MIT"
   spec.required_ruby_version = Gem::Requirement.new(">= 2.3.0")
