@@ -47,7 +47,7 @@ module ZineBrewer
       @lead   = set_header_item(h[2], 'nil')
       @pic    = set_header_item(h[3], 'dummy.png')
       @author = set_header_item(h[4], '著者 クレジット')
-      @css    = set_header_item(h[5], '')
+      @css    = set_header_item((h[5].each_line.map{|i| '.c-article_content ' + i }.join rescue nil), '')
 
       @pp_header = make_pp_header
       @converted = convert(body)
@@ -70,7 +70,7 @@ module ZineBrewer
       header_output << "［リード］\n<p>#{@lead}</p>" if @lead.is_complete?
       header_output << "［タイトル画像］\n#{@pic}" if @pic.is_complete?
       header_output << "［著者クレジット］\n#{@author}" if @author.is_complete?
-      header_output << "［追加CSS］\n#{@css.each_line.map{|i| '.c-article_content ' + i }.join}" if @css.is_complete?
+      header_output << "［追加CSS］\n#{@css}" if @css.is_complete?
       header_output.join("\n\n")
     end
 
