@@ -10,8 +10,6 @@ module ZineBrewer
 
   class Application
 
-    Commons = "[hlink]: common/hlink.svg"
-
     attr_reader :corner, :title, :lead, :pic, :author, :css, :converted
 
     def initialize(path)
@@ -27,9 +25,9 @@ module ZineBrewer
 
       header, body = /\A((?:.|\n)*?)<%-- page -->/.match(input_data).yield_self do |m|
         if m.nil?
-          ['', "\n\n" + Commons + "\n\n" + input_data]
+          ['', "\n\n" + input_data]
         else
-          [m[1], '<%-- page -->' + "\n\n" + Commons + "\n\n" + m.post_match]
+          [m[1], '<%-- page -->' + "\n\n" + m.post_match]
         end
       end
 
