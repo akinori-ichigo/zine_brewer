@@ -42,24 +42,22 @@ module ZineBrewer
 
       @article_id = $+ if header.sub!(/^■記事ID■[^0-9]+(\d+)$/, '')
       h = header.strip.split(/\n\n+/)
-      @corner = set_header_item(h[0], '記事・ニュースのコーナー')
-      @title  = set_header_item(h[1], 'タイトル' )
-      @lead   = set_header_item(h[2], 'nil')
-      @pic    = set_header_item(h[3], 'dummy.png')
-      @author = set_header_item(h[4], '著者 クレジット')
-      @css    = set_header_item((h[5].each_line.map{|i| '.c-article_content ' + i }.join rescue nil), '')
+      @corner, @title, @lead, @author = [0, 1, 2, 4].map{|i| set_header_item(h[i], '')}
+      @pic = set_header_item(h[3], ''){ "#{@article_id}_#{h[3]}" }
+      @css = set_header_item(h[5], ''){ h[5].each_line.map{|i| '.c-article_content ' + i }.join }
 
       @pp_header = make_pp_header
       @converted = convert(body)
     end
 
-    def set_header_item(target, default)
-      if /\A\ufeff?[\-%]+\Z/ =~ target || target.nil?
-        default.define_singleton_method(:is_complete?){ false }
-        default
+    def set_header_item(value, alt)
+      if /\A\ufeff?[\-%]+\Z/ =~ value || value.nil?
+        alt.define_singleton_method(:is_complete?){ false }
+        alt
       else
-        target.define_singleton_method(:is_complete?){ true }
-        target
+        value = yield if block_given?
+        value.define_singleton_method(:is_complete?){ true }
+        value
       end
     end
 

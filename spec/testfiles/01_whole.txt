@@ -9,6 +9,7 @@ cover.png
 清少納言
 
 .haze { color:purple; }
+p.pop { background-color: pink; }
 
 ■記事ID■：1234
 

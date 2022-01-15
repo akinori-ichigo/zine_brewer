@@ -22,4 +22,10 @@ RSpec.describe ZineBrewer do
     expect(ZineBrewer::Application.new("spec/testfiles/02_definition_table_th_width.txt").pretty_print.strip).to \
       eq File.open("spec/testfiles/02_definition_table_th_width.html").read.strip
   end
+
+  it "puts the header file again" do
+    expect(ZineBrewer::Application.new("spec/testfiles/03_whole.txt").make_pp_header.strip).to \
+      eq File.open("spec/testfiles/03_header.txt").read.strip
+  end
+
 end
