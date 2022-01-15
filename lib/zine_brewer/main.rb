@@ -25,13 +25,6 @@ module ZineBrewer
 
       @dir = File.dirname(path)
 
-      @article_id = begin
-                      File.open("#{@dir}/id.txt", "rt").read.chomp
-                    rescue
-                      docdir = File.basename(@dir)
-                      /^\d+$/ =~ docdir ? docdir : '■記事ID■'
-                    end
-
       header, body = /\A((?:.|\n)*?)<%-- page -->/.match(input_data).yield_self do |m|
         if m.nil?
           ['', "\n\n" + Commons + "\n\n" + input_data]
@@ -40,7 +33,11 @@ module ZineBrewer
         end
       end
 
-      @article_id = $+ if header.sub!(/^■記事ID■[^0-9]+(\d+)$/, '')
+      @article_id = if header.sub!(/^■記事ID■[^0-9]+(\d+)$/, '')
+                      Regexp.last_match[1]
+                    else
+                      /^\d+/.match(File.basename(@dir)).yield_self{|m| m.nil? ? '■記事ID■' : m[0]}
+                    end
       h = header.strip.split(/\n\n+/)
       @corner, @title, @lead, @author = [0, 1, 2, 4].map{|i| set_header_item(h[i], '')}
       @pic = set_header_item(h[3], ''){ "#{@article_id}_#{h[3]}" }
