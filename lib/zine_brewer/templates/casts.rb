@@ -13,21 +13,24 @@ class Casts < Mustache
   #   cap:   プロフィール
 
   # CSSに下記の登録が必要
-  # .c-article_content div.casts { margin-bottom: 3rem; padding: 1.6rem 1.6rem 0.6rem; border: solid 2px #e5e5e5; }
-  # .c-article_content div.casts h4 { margin-bottom: 1.6em; border-bottom: 2px solid #e5e5e5; font-size: 1.8rem; }
-  # .c-article_content div.casts p { font-size: 1.4rem; line-height: 1.7; margin-bottom: 1rem; }
-  # .c-article_content div.casts p>strong.name { font-size: 1.5rem; }
-  # .c-article_content div.casts>div ~ div { margin-top: 0.8rem; }
+  # @media screen and (max-width: 768px){
+  #   .c-article_content div.casts div.cast { flex-direction:column; }
+  # }
+  # .c-article_content div.casts { border: solid 2px #e3e3e3; }
+  # .c-article_content div.casts h4 { border-bottom: 2px solid #e5e5e5; font-size: 1.8rem; }
+  # .c-article_content div.casts p { font-size: 1.4rem; line-height: 1.7; }
+  # .c-article_content div.casts p strong.name { font-size: 1.5rem; }
+  # .c-article_content div.casts div.cast ~ div.cast { margin-top: 1rem; }
 
   @template = <<EOT
-  <div class="casts">
+  <div class="casts mb-5 pt-2 px-3 pb-2">
   {{#prof_list}}
-    {{#title_sw}}<h4>{{title}}</h4>{{/title_sw}}
+    {{#title_sw}}<h4 class="mb-3">{{title}}</h4>{{/title_sw}}
     <div class="d-flex">
-      <figure class="flex-shrink-0">
+      <figure class="me-3 mb-2">
         <img src="{{fig_src}}" loading="lazy" alt="{{name}}" style="width:110px;" />
       </figure>
-      <p class="flex-grow-1 ms-3" markdown="span"><strong class="name">{{name}}（{{huri}}）氏</strong><br />{{& caption}}</p>
+      <p class="mb-2" markdown="span"><strong class="name">{{name}}（{{huri}}）氏</strong><br />{{& caption}}</p>
     </div>
   {{/prof_list}}
   </div>
