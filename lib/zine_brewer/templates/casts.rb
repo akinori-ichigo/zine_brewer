@@ -13,17 +13,21 @@ class Casts < Mustache
   #   cap:   プロフィール
 
   # CSSに下記の登録が必要
-  # .c-article_content div.casts>div ~ div { margin-top:8px; }
+  # .c-article_content div.casts { margin-bottom: 3rem; padding: 1.6rem 1.6rem 0.6rem; border: solid 2px #e5e5e5; }
+  # .c-article_content div.casts h4 { margin-bottom: 1.6em; border-bottom: 2px solid #e5e5e5; font-size: 1.8rem; }
+  # .c-article_content div.casts p { font-size: 1.4rem; line-height: 1.7; margin-bottom: 1rem; }
+  # .c-article_content div.casts p>strong.name { font-size: 1.5rem; }
+  # .c-article_content div.casts>div ~ div { margin-top: 0.8rem; }
 
   @template = <<EOT
-  <div class="casts" style="margin-bottom:30px; padding:13px 13px 3px; border:solid 2px #eee;">
+  <div class="casts">
   {{#prof_list}}
     {{#title_sw}}<h4>{{title}}</h4>{{/title_sw}}
-    <div class="imgLRBlock cf">
-      <figure class="imgL">
-        <img src="{{fig_src}}" loading="lazy" alt="{{name}}" style="height:135px;" />
+    <div class="d-flex">
+      <figure class="flex-shrink-0">
+        <img src="{{fig_src}}" loading="lazy" alt="{{name}}" style="width:110px;" />
       </figure>
-      <p class="ovh" markdown="span" style="font-size:14px; line-height:1.7; margin-bottom:10px;"><strong style="font-size:15px;">{{name}}（{{huri}}）氏</strong><br />{{& caption}}</p>
+      <p class="flex-grow-1 ms-3" markdown="span"><strong class="name">{{name}}（{{huri}}）氏</strong><br />{{& caption}}</p>
     </div>
   {{/prof_list}}
   </div>
