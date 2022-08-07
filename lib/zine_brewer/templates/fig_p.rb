@@ -26,7 +26,7 @@ class Fig_P < Mustache
   <figcaption style="text-align:left;">
     <strong>{{name}}（{{huri}}）氏</strong><br/>
     <span markdown="span">{{& title}}</span>
-    <div markdown="span" style="margin-top:6px;">
+    <div markdown="span" style="margin-top:0.6rem;">
       {{& caption}}
     </div>
   </figcaption>
