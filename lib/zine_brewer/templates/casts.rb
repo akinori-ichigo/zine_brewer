@@ -13,9 +13,6 @@ class Casts < Mustache
   #   cap:   プロフィール
 
   # CSSに下記の登録が必要
-  # @media screen and (max-width: 768px){
-  #   .c-article_content div.casts div.cast { flex-direction:column; }
-  # }
   # .c-article_content div.casts { border: solid 2px #e5e5e5; }
   # .c-article_content div.casts h4 { border-bottom: 2px solid #e5e5e5; font-size: 1.8rem; }
   # .c-article_content div.casts p { font-size: 1.4rem; line-height: 1.7; }
@@ -25,9 +22,9 @@ class Casts < Mustache
   @template = <<EOT
   <div class="casts mb-5 pt-2 px-3 pb-2">
   {{#prof_list}}
-    {{#title_sw}}<h4 class="mb-3">{{title}}</h4>{{/title_sw}}
-    <div class="cast d-flex">
-      <figure class="me-3 mb-2">
+    {{#title_sw}}<h4 class="mb-md-3 mb-2">{{title}}</h4>{{/title_sw}}
+    <div class="cast d-md-flex">
+      <figure class="me-md-3 mb-2 mb-md-0 flex-shrink-0">
         <img src="{{fig_src}}" loading="lazy" alt="{{name}}" style="width:110px;" />
       </figure>
       <p class="mb-2" markdown="span"><strong class="name">{{name}}（{{huri}}）氏</strong><br />{{& caption}}</p>

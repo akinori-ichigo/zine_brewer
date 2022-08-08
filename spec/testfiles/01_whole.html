@@ -16,9 +16,6 @@
 ［追加CSS］
 .c-article_content .haze { color:purple; }
 .c-article_content p.pop { background-color: pink; }
-@media screen and (max-width: 768px){
-  .c-article_content div.casts div.cast { flex-direction:column; }
-}
 .c-article_content div.casts { border: solid 2px #e3e3e3; }
 .c-article_content div.casts h4 { border-bottom: 2px solid #e5e5e5; font-size: 1.8rem; }
 .c-article_content div.casts p { font-size: 1.4rem; line-height: 1.7; }
@@ -28,9 +25,9 @@
 
 <div id="p1">
   <div class="casts mb-5 pt-2 px-3 pb-2">
-    <h4 class="mb-3">著者</h4>
-    <div class="cast d-flex">
-      <figure class="me-3 mb-2">
+    <h4 class="mb-md-3 mb-2">著者</h4>
+    <div class="cast d-md-flex">
+      <figure class="me-md-3 mb-2 mb-md-0 flex-shrink-0">
         <img src="/static/images/article/1234/1234_seishonagon.jpg" loading="lazy" alt="清少納言" style="width:110px;" />
       </figure>
       <p class="mb-2"><strong class="name">清少納言（せいしょうなごん）氏</strong><br />

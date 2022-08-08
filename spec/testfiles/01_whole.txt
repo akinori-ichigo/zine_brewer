@@ -10,9 +10,6 @@ cover.png
 
 .haze { color:purple; }
 p.pop { background-color: pink; }
-@media screen and (max-width: 768px){
-  div.casts div.cast { flex-direction:column; }
-}
 div.casts { border: solid 2px #e3e3e3; }
 div.casts h4 { border-bottom: 2px solid #e5e5e5; font-size: 1.8rem; }
 div.casts p { font-size: 1.4rem; line-height: 1.7; }
