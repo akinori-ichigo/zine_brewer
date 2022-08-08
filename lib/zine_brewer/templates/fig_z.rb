@@ -15,7 +15,7 @@ class Fig_Z < Mustache
   # cap: キャプション
 
   @template = <<EOT
-<figure>
+<figure{{& wraparound}}>
   {{#imgs_list}}
   <a href="{{fig_src}}" rel="lightbox" target="_blank"><img src="{{fig_src}}" alt="{{alt}}" {{& img_style}}/></a>
   {{/imgs_list}}

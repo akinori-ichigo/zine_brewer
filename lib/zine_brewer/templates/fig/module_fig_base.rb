@@ -25,6 +25,22 @@ module Fig_00
     end
   end
 
+  def wraparound
+    begin
+      c = case wrap
+          when 'imgL'
+            'text-center float-md-start me-md-3 mb-3'
+          when 'imgR'
+            'text-center float-md-end ms-md-3 mb-3'
+          else
+            nil
+          end
+      c ? " class=\"#{c}\"" : ''
+    rescue
+      ''
+    end
+  end
+
   private
   def a_img_param
     [{"src" => (src rescue nil),

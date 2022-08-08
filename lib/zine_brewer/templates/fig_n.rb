@@ -9,13 +9,14 @@ class Fig_N < Mustache
   include Fig_00
 
   # <<Fig_N>>
+  # wrap: テキスト回り込み設定
   # src: 画像ファイル名
   # width: 画像幅
   # height: 画像高さ
   # cap: キャプション
 
   @template = <<EOT
-<figure>
+<figure{{& wraparound}}>
   {{#imgs_list}}
   <img src="{{fig_src}}" loading="lazy" alt="{{alt}}" {{& img_style}} />
   {{/imgs_list}}
