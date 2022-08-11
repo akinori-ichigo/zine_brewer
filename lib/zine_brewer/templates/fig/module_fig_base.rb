@@ -9,7 +9,7 @@ module Fig_00
       raise "Error: No src:" if h["src"].nil?
       an_img[:fig_src] = make_src(h["src"])
       an_img[:href] = h["href"]
-      an_img[:alt] = make_alt(h["alt"])
+      an_img[:alt] = make_alt
       an_img[:img_style] = make_img_style(h["width"], h["height"]) \
         unless h["width"].nil? && h["height"].nil?
       result << an_img
@@ -62,11 +62,15 @@ module Fig_00
     end
   end
 
-  def make_alt(l_alt)
+  def make_alt
     begin
-      l_alt.gsub(/\[(.+?)\]\(.+?\)/, '\1').gsub(/\n/, '')
+      alt
     rescue
-      nil
+      begin
+        cap.chomp.gsub(/\[(.+?)\]\(.+?\)/, '\1').gsub(/\n/, ' ')
+      rescue
+        nil
+      end
     end
   end
   
