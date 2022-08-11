@@ -69,7 +69,19 @@ EOT
   end
   
   def b_cover
-    src rescue '/static/images/article/common/book_cover_dummy.png'
+    begin
+      case File.dirname(src)
+      when ".", "images"
+        f = File.basename(src)
+        "/static/images/article/■記事ID■/#{/^\d+_/ =~ f ? f : '■記事ID■_' + f}"
+      when "common"
+        "/static/images/article/common/#{File.basename(src)}"
+      else
+        src
+      end
+    rescue
+      '/static/images/article/common/book_cover_dummy.png'
+    end
   end
   
   def b_size
