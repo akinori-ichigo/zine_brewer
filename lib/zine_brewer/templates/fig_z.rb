@@ -10,6 +10,7 @@ class Fig_Z < Mustache
 
   # <<Fig_Z>>
   # src: 画像ファイル名
+  # alt: altテキスト
   # width: 画像幅
   # height: 画像高さ
   # cap: キャプション

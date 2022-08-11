@@ -11,6 +11,7 @@ class Fig_N < Mustache
   # <<Fig_N>>
   # wrap: テキスト回り込み設定
   # src: 画像ファイル名
+  # alt: altテキスト
   # width: 画像幅
   # height: 画像高さ
   # cap: キャプション

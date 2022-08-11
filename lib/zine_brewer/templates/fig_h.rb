@@ -11,6 +11,7 @@ class Fig_H < Mustache
   # <<Fig_H>>
   # src: 画像ファイル名
   # href: 画像クリックで遷移するURL
+  # alt: altテキスト
   # width: 画像幅
   # height: 画像高さ
   # cap: キャプション
