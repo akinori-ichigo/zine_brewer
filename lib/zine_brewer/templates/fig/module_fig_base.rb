@@ -4,15 +4,15 @@ module Fig_00
   
   def imgs_list
     result = []
-    (imgs rescue a_img_param).each do |h|
-      a_img = {}
+    (imgs rescue an_img_param).each do |h|
+      an_img = {}
       raise "Error: No src:" if h["src"].nil?
-      a_img[:fig_src] = make_src(h["src"])
-      a_img[:href] = h["href"]
-      a_img[:alt] = make_alt(h["alt"])
-      a_img[:img_style] = make_img_style(h["width"], h["height"]) \
+      an_img[:fig_src] = make_src(h["src"])
+      an_img[:href] = h["href"]
+      an_img[:alt] = make_alt(h["alt"])
+      an_img[:img_style] = make_img_style(h["width"], h["height"]) \
         unless h["width"].nil? && h["height"].nil?
-      result << a_img
+      result << an_img
     end
     result
   end
@@ -33,16 +33,16 @@ module Fig_00
           when 'imgR'
             'text-center float-md-end ms-md-3 mb-3'
           else
-            nil
+            raise
           end
-      c ? " class=\"#{c}\"" : ''
+      %Q{ class="#{c}"}
     rescue
       ''
     end
   end
 
   private
-  def a_img_param
+  def an_img_param
     [{"src" => (src rescue nil),
       "href" => (href rescue nil),
       "alt" => (alt rescue caption),
