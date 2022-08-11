@@ -28,4 +28,9 @@ RSpec.describe ZineBrewer do
       eq File.open("spec/testfiles/03_header.txt").read.strip
   end
 
+  it "has the book introduction column correctly" do
+    expect(ZineBrewer::Application.new("spec/testfiles/04_whole.txt").pretty_print.strip).to \
+      eq File.open("spec/testfiles/04_book_column.html").read.strip
+  end
+
 end
