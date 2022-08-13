@@ -17,7 +17,8 @@ class Casts < Mustache
   # .c-article_content div.casts h4 { border-bottom: 2px solid #e5e5e5; font-size: 1.8rem; }
   # .c-article_content div.casts p { font-size: 1.4rem; line-height: 1.7; }
   # .c-article_content div.casts p strong.name { font-size: 1.5rem; }
-  # .c-article_content div.casts div.cast ~ div.cast { margin-top: 1rem; }
+  # .c-article_content div.casts div.cast + div.cast { margin-top: 2rem; }
+  # .c-article_content div.casts div.cast p:last-child { margin-bottom: 1rem !important; }
 
   @template = <<EOT
   <div class="casts mb-5 pt-2 px-3">
