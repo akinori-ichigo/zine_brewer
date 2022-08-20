@@ -31,7 +31,7 @@ casts:
 ## 第一段
 
 <<Fig_N>>
-src: fig01.jpg
+src: 1.jpg
 width: 650px
 
 　[春は、あけぼの。]{:.hot %font-weight:bold;}やうやう白くなりゆく山ぎは少し明りて[紫だちたる雲]{:.haze}の細くたなびきたる。
