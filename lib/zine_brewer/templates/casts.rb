@@ -18,17 +18,17 @@ class Casts < Mustache
   # .c-article_content div.casts p { font-size: 1.4rem; line-height: 1.7; }
   # .c-article_content div.casts p strong.name { font-size: 1.5rem; }
   # .c-article_content div.casts div.cast + div.cast { margin-top: 2rem; }
-  # .c-article_content div.casts div.cast p:last-child { margin-bottom: 1rem !important; }
+  # .c-article_content div.casts div.cast + h4 { margin-top: 1rem; }
 
   @template = <<EOT
-  <div class="casts mb-5 pt-2 px-3">
+  <div class="casts mb-5 pt-2 pb-2 px-3">
   {{#prof_list}}
     {{#title_sw}}<h4 class="mb-2">{{title}}</h4>{{/title_sw}}
     <div class="cast d-md-flex">
       <figure class="me-md-3 mb-2 mb-md-0 flex-shrink-0">
         <img src="{{fig_src}}" loading="lazy" alt="{{name}}" style="width:110px;" />
       </figure>
-      <p class="mb-2" markdown="span"><strong class="name">{{name}}（{{huri}}）氏</strong><br />{{& caption}}</p>
+      <p markdown="span"><strong class="name">{{name}}（{{huri}}）氏</strong><br />{{& caption}}</p>
     </div>
   {{/prof_list}}
   </div>
