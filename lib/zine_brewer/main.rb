@@ -38,7 +38,7 @@ module ZineBrewer
                     end
       h = header.strip.split(/\n\n+/)
       @corner, @title, @lead, @author = [0, 1, 2, 4].map{|i| set_header_item(h[i], '')}
-      @pic = set_header_item(h[3], ''){ /^\./ =~ h[3] ? h[3] : "/images/#{@article_id}_#{h[3]}" }
+      @pic = set_header_item(h[3], ''){ /^[Ss](eries)?_/ =~ h[3] ? h[3] : "#{@article_id}_#{h[3]}" }
       @css = set_header_item(h[5], ''){ h[5].each_line.map do |i|
         if /^[@{}]/ =~ i
           i
@@ -67,7 +67,7 @@ module ZineBrewer
       header_output << "［コーナー］\n#{@corner}" if @corner.is_complete?
       header_output << "［タイトル］\n#{@title}" if @title.is_complete?
       header_output << "［リード］\n<p>#{@lead}</p>" if @lead.is_complete?
-      header_output << "［タイトル画像］\n#{File.basename(@pic)}" if @pic.is_complete?
+      header_output << "［タイトル画像］\n#{@pic}" if @pic.is_complete?
       header_output << "［著者クレジット］\n#{@author}" if @author.is_complete?
       header_output << "［追加CSS］\n#{@css}" if @css.is_complete?
       header_output.join("\n\n")
