@@ -38,7 +38,7 @@ module ZineBrewer
                     end
       h = header.strip.split(/\n\n+/)
       @corner, @title, @lead, @author = [0, 1, 2, 4].map{|i| set_header_item(h[i], '')}
-      @pic = set_header_item(h[3], ''){ /^\./ =~ h[3] ? h[3] : "/images/#{@article_id}_#{h[3]}" }
+      @pic = set_header_item(h[3], ''){ /^\./ =~ h[3] ? h[3] : "./images/#{@article_id}_#{h[3]}" }
       @css = set_header_item(h[5], ''){ h[5].each_line.map do |i|
         if /^[@{}]/ =~ i
           i
