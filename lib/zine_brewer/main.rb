@@ -1,6 +1,6 @@
 # coding: utf-8
 
-require 'kconv'
+require 'nkf'
 require 'darkmouun'
 
 require_relative 'kramdown/parser/sekd'
@@ -15,8 +15,7 @@ module ZineBrewer
     def initialize(path)
 
       begin
-        Encoding.default_external =  Kconv.guess(File.open(path, 'r:BINARY').read)
-        input_data = File.open(path, 'rt').read.encode('UTF-8')
+        input_data = file_read_convert_utf8(path)
       rescue
         raise 'ERROR: The input file does not exist. Check it.'
       end
@@ -38,39 +37,17 @@ module ZineBrewer
                     end
       h = header.strip.split(/\n\n+/)
       @corner, @title, @lead, @author = [0, 1, 2, 4].map{|i| set_header_item(h[i], '')}
-      @pic = set_header_item(h[3], ''){ /^\./ =~ h[3] ? h[3] : "./images/#{@article_id}_#{h[3]}" }
-      @css = set_header_item(h[5], ''){ h[5].each_line.map do |i|
-        if /^[@{}]/ =~ i
-          i
-        else
-          /(\s*)(.+)/.match(i)[1..2].insert(1, '.c-article_content ').join + "\n"
+      @pic = set_header_item(h[3], ''){|v| /^\./ =~ v ? v : "./images/#{@article_id}_#{v}" }
+      @css = set_header_item(h[5], '') do |v|
+        v.scan(/\s*&(.+)\s*/).flatten.each do |i|
+          v << (file_read_convert_utf8("#{@dir}/css/#{i}") rescue '')
         end
-      end.join }
-
-      @pp_header = make_pp_header
-      @converted = convert(body)
-    end
-
-    def set_header_item(value, alt)
-      if /\A\ufeff?[\-%]+\Z/ =~ value || value.nil?
-        alt.define_singleton_method(:is_complete?){ false }
-        alt
-      else
-        value = yield if block_given?
-        value.define_singleton_method(:is_complete?){ true }
-        value
+        v.scan(/(?:(?:\s*(?:[^,{]+)\s*,?\s*)*?){(?:(?:\s*(?:[^:]+)\s*:\s*(?:[^;]+?)\s*;\s*)*?)}\s*/).map do |i|
+          '.c-article_content ' + i unless /^@/ =~ i
+        end.join
       end
-    end
 
-    def make_pp_header
-      header_output = []
-      header_output << "［コーナー］\n#{@corner}" if @corner.is_complete?
-      header_output << "［タイトル］\n#{@title}" if @title.is_complete?
-      header_output << "［リード］\n<p>#{@lead}</p>" if @lead.is_complete?
-      header_output << "［タイトル画像］\n#{File.basename(@pic)}" if @pic.is_complete?
-      header_output << "［著者クレジット］\n#{@author}" if @author.is_complete?
-      header_output << "［追加CSS］\n#{@css}" if @css.is_complete?
-      header_output.join("\n\n")
+      @converted = convert(body)
     end
 
     ## Writing out header and body to each file
@@ -78,6 +55,24 @@ module ZineBrewer
       make_proof_directory
       write_proof_header
       write_proof_body
+    end
+
+    private
+
+    def file_read_convert_utf8(path)
+      _doc = File.open(path, 'rt').read
+      _doc.force_encoding(NKF.guess(_doc)).encode('utf-8')
+    end
+
+    def set_header_item(value, alt)
+      if /\A\ufeff?[\-%]+\Z/ =~ value || value.nil?
+        alt.define_singleton_method(:is_complete?){ false }
+        alt
+      else
+        value = yield(value) if block_given?
+        value.define_singleton_method(:is_complete?){ true }
+        value
+      end
     end
 
     def make_proof_directory
@@ -89,8 +84,15 @@ module ZineBrewer
     end
 
     def write_proof_header
+      header_output = []
+      header_output << "［コーナー］\n#{@corner}" if @corner.is_complete?
+      header_output << "［タイトル］\n#{@title}" if @title.is_complete?
+      header_output << "［リード］\n<p>#{@lead}</p>" if @lead.is_complete?
+      header_output << "［タイトル画像］\n#{File.basename(@pic)}" if @pic.is_complete?
+      header_output << "［著者クレジット］\n#{@author}" if @author.is_complete?
+      header_output << "［追加CSS］\n#{@css}" if @css.is_complete?
       File.open("#{@proof_dir}/header.txt", 'wb') do |f|
-        f.write(@pp_header)
+        f.write(header_output.join("\n\n"))
       end
     end
 
