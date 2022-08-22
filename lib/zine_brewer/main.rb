@@ -12,7 +12,7 @@ module ZineBrewer
 
     attr_reader :corner, :title, :lead, :pic, :author, :css, :converted
 
-    def initialize(path)
+    def initialize(path, opt = {})
 
       begin
         input_data = file_read_convert_utf8(path)
@@ -47,7 +47,7 @@ module ZineBrewer
         end.join
       end
 
-      @converted = convert(body)
+      @converted = convert(body, opt)
     end
 
     ## Writing out header and body to each file
@@ -103,11 +103,11 @@ module ZineBrewer
     end
 
     ## Converts markdown to html and returns body
-    def convert(body)
+    def convert(body, opt)
       dkmn = Darkmouun.document.new(body, {:auto_ids => false, :input => 'sekd'}, :se_html)
 
       ### Sets templates
-      dkmn.add_templates "#{__dir__}/templates/", *Dir['*.rb',base:"#{__dir__}/templates/"]
+      (tmpl_dir = opt[:template_dir]).nil? || dkmn.add_templates(tmpl_dir, *Dir['*.rb', base: tmpl_dir])
 
       ### Sets pre process
       dkmn.pre_process = lambda do |t|
