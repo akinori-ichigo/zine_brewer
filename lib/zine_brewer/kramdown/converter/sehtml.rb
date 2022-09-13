@@ -18,8 +18,11 @@ module Kramdown
     class SeHtml < Html
 
       def convert_img(el, indent)
+        f = File.basename(el.attr['src'])
         if %r{^common} =~ File.dirname(el.attr['src'])
-          el.attr['src'] = "/static/images/article/common/#{File.basename(el.attr['src'])}"
+          el.attr['src'] = "/static/images/article/common/#{f}"
+        else
+          el.attr['src'] = "/static/images/article/■記事ID■/#{/^\d+_/ =~ f ? f : '■記事ID■_' + f}"
         end
         "<img#{html_attributes(el.attr)} />"
       end
