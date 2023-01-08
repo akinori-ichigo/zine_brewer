@@ -104,7 +104,7 @@ module ZineBrewer
 
     ## Converts markdown to html and returns body
     def convert(body, opt)
-      dkmn = Darkmouun.document.new(body, {:auto_ids => false, :input => 'sekd'}, :se_html)
+      dkmn = Darkmouun.document.new(body, {:auto_ids => false, :entity_output => :as_input, :input => 'sekd'}, :se_html)
 
       ### Sets templates
       (tmpl_dir = opt[:template_dir]).nil? || dkmn.add_templates(tmpl_dir, *Dir['*.rb', base: tmpl_dir])
@@ -125,11 +125,6 @@ module ZineBrewer
 
       ### Converts a markdown document and returns that converted body
       dkmn.convert
-    end
-
-    ### pretty print of the converted document
-    def pretty_print
-      @pp_header + "\n\n" + @converted
     end
   end
 end
