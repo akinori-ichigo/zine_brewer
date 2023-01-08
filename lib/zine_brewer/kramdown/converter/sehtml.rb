@@ -17,6 +17,17 @@ module Kramdown
   module Converter
     class SeHtml < Html
 
+     def convert_standalone_image(el, indent)
+        f = File.basename(el.children.first.attr['src'])
+        if %r{^common} =~ File.dirname(el.children.first.attr['src'])
+          el.children.first.attr['src'] = "/static/images/article/common/#{f}"
+        else
+          el.children.first.attr['src'] = "/static/images/article/■記事ID■/#{/^\d+_/ =~ f ? f : '■記事ID■_' + f}"
+        end
+        el.children.first.attr['loading'] = 'lazy'
+        super(el, indent)
+     end
+
       def convert_img(el, indent)
         f = File.basename(el.attr['src'])
         if %r{^common} =~ File.dirname(el.attr['src'])
@@ -24,6 +35,7 @@ module Kramdown
         else
           el.attr['src'] = "/static/images/article/■記事ID■/#{/^\d+_/ =~ f ? f : '■記事ID■_' + f}"
         end
+        el.attr['loading'] = 'lazy'
         "<img#{html_attributes(el.attr)} />"
       end
 
@@ -56,7 +68,7 @@ module Kramdown
       end
       
       def convert_column(el, indent)
-        format_as_indented_block_html('section', el.attr, inner(el, indent), indent)
+        format_as_indented_block_html('div', el.attr, inner(el, indent), indent)
       end
       
       # Makes caption element from caption attr of table element.
