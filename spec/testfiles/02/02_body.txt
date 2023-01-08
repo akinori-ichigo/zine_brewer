@@ -1,6 +1,3 @@
-［タイトル］
-定義テーブルの1列目にwidthを指定
-
 <div id="p1">
   <table>
     <caption>講座の概要</caption>

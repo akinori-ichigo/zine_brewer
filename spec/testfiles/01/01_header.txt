@@ -16,9 +16,4 @@
 ［追加CSS］
 .c-article_content .haze { color:purple; }
 .c-article_content p.pop { background-color: pink; }
-.c-article_content div.casts { border: solid 2px #e3e3e3; }
-.c-article_content div.casts h4 { border-bottom: 2px solid #e5e5e5; font-size: 1.8rem; }
-.c-article_content div.casts p { font-size: 1.4rem; line-height: 1.7; }
-.c-article_content div.casts p strong.name { font-size: 1.5rem; }
-.c-article_content div.casts div.cast ~ div.cast { margin-top: 1rem; }
 
