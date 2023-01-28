@@ -60,7 +60,7 @@ module ZineBrewer
     private
 
     def file_read_convert_utf8(path)
-      _doc = File.open(path, 'rt').read
+      _doc = File.open(path, 'rt'){|f| f.read }
       _doc.force_encoding(NKF.guess(_doc)).encode('utf-8')
     end
 
