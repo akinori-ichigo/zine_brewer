@@ -115,6 +115,7 @@ module ZineBrewer
 
       ### Sets post process
       dkmn.post_process = lambda do |t|
+        t.gsub!(/(?<!\\)&amp;null;/, '')
         t.gsub!('(((BR)))', '<br/>')
         t.gsub!(/■記事ID■/, @article_id)
         t.gsub!(/—/, "―")
