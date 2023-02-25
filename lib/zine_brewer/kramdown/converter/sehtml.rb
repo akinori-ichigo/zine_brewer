@@ -122,7 +122,7 @@ module Kramdown
       end
 
       def convert_footnote_definition_sekd(el, indent)
-        format_as_block_html('section', el.attr, "\n  <h4>注</h4>\n" + inner(el, indent), indent)
+        format_as_block_html('div', el.attr, "\n  <h4>注</h4>\n" + inner(el, indent), indent)
       end
 
       def convert_a(el, indent)
