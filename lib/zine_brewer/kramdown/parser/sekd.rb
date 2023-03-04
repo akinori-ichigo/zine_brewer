@@ -106,7 +106,7 @@ module Kramdown
         if @src.check(self.class::COLUMN_MATCH)
           start_line_number = @src.current_line_number
           @src.pos += @src.matched_size
-          el = Element.new(:column, nil, {'class' => 'columnSection'}, :location => start_line_number)
+          el = Element.new(:column, nil, {'class' => 'columnSection c'}, :location => start_line_number)
           parse_blocks(el, @src[1])
           update_attr_with_ial(el.attr, @block_ial) unless @block_ial.nil?
           @tree.children << el
