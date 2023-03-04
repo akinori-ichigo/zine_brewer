@@ -8,6 +8,12 @@ require_relative 'kramdown/converter/sehtml'
 
 module ZineBrewer
 
+  def convert(str)
+    dkmn = Darkmouun.document.new(str, {:auto_ids => false, :entity_output => :as_input, :input => 'sekd'}, :se_html)
+    dkmn.convert
+  end
+  module_function :convert
+
   class Application
 
     attr_reader :corner, :title, :lead, :pic, :author, :css, :converted
