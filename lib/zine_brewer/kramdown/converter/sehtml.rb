@@ -80,13 +80,11 @@ module Kramdown
       def convert_table(el, indent)
         raw_caption = el.attr.delete('caption')
         table = super(el, indent)
-        if !raw_caption.nil?
+        if raw_caption.nil?
+          table
+        else
           table.sub!(/\A(<table.*?>)/, "\\1\n#{table_caption(raw_caption)}\n")
         end
-        table.gsub(/^\s*<\/?t(head|body|foot)>\n/, '')
-             .gsub(/ style="text-align: left"/, '')
-             .gsub(/ style="text-align: center"/, ' class="txtC"')
-             .gsub(/ style="text-align: right"/, ' class="txtR"')
       end
 
       def convert_definition_table(el, indent)
