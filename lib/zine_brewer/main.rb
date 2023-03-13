@@ -71,7 +71,7 @@ module ZineBrewer
     end
 
     def set_header_item(value, alt)
-      if /\A\ufeff?[\-%]+\Z/ =~ value || value.nil?
+      if /^\ufeff?-{2,}/ =~ value || value.nil?
         alt.define_singleton_method(:is_complete?){ false }
         alt
       else
