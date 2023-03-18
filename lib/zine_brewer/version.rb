@@ -1,3 +1,3 @@
 module ZineBrewer
-  VERSION = "1.18.2"
+  VERSION = "2.0.0"
 end

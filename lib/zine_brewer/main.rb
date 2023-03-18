@@ -9,17 +9,45 @@ require_relative 'kramdown/converter/sehtml'
 module ZineBrewer
 
   def convert(str)
-    dkmn = Darkmouun.document.new(str, {:auto_ids => false, :entity_output => :as_input, :input => 'sekd'}, :se_html)
-    dkmn.convert
+    dkmn = Darkmouun.document.new
+    dkmn.convert(str, {:auto_ids => false, :entity_output => :as_input, :input => 'sekd'}, :to_se_html)
   end
-  module_function :convert
 
-  class Application
+  def document
+    ZineBrewer
+  end
+
+  module_function :convert, :document
+
+  class ZineBrewer
 
     attr_reader :corner, :title, :lead, :pic, :author, :css, :converted
 
-    def initialize(path, opt = {})
+    def initialize(template_dir: nil)
+      @dkmn = Darkmouun.document.new
 
+      ### Sets templates
+      template_dir.nil? || Dir['*.rb', base: template_dir].each do |t|
+        @dkmn.add_template("#{template_dir}/#{t}")
+      end
+
+      ### Sets pre process
+      @dkmn.pre_process = lambda do |t|
+      end
+
+      ### Sets post process
+      @dkmn.post_process = lambda do |t|
+        t.gsub!(/(?<!\\)&amp;null;/, '')
+        t.gsub!('(((BR)))', '<br/>')
+        t.gsub!(/■記事ID■/, @article_id)
+        t.gsub!(/—/, "―")
+        t.gsub!(/[‘’]/, "'")
+        t.gsub!(/<li>\\/, '<li>')
+        t << "</div>" if /<div id="p1">/ =~ t
+      end
+    end
+
+    def convert(path)
       begin
         input_data = file_read_convert_utf8(path)
       rescue
@@ -53,14 +81,31 @@ module ZineBrewer
         end.join
       end
 
-      @converted = convert(body, opt)
+      @converted = @dkmn.convert(body, {:auto_ids => false, :entity_output => :as_input, :input => 'sekd'}, :to_se_html)
     end
 
-    ## Writing out header and body to each file
+    ## Writing out header and body as files in 'proof' directory
     def write_out
-      make_proof_directory
-      write_proof_header
-      write_proof_body
+      proof_dir = @dir + '/proof'
+      begin
+        Dir.mkdir(proof_dir)
+      rescue Errno::EEXIST
+      end
+
+      header_output = []
+      header_output << "［コーナー］\n#{@corner}" if @corner.is_complete?
+      header_output << "［タイトル］\n#{@title}" if @title.is_complete?
+      header_output << "［リード］\n<p>#{@lead}</p>" if @lead.is_complete?
+      header_output << "［タイトル画像］\n#{File.basename(@pic)}" if @pic.is_complete?
+      header_output << "［著者クレジット］\n#{@author}" if @author.is_complete?
+      header_output << "［追加CSS］\n#{@css}" if @css.is_complete?
+      File.open("#{proof_dir}/header.txt", 'wb') do |f|
+        f.write(header_output.join("\n\n"))
+      end
+
+      File.open("#{proof_dir}/body.txt", 'wb') do |f|
+        f.write(@converted.gsub("<!-- page_delimiter -->\n", ''))
+      end
     end
 
     private
@@ -81,58 +126,6 @@ module ZineBrewer
       end
     end
 
-    def make_proof_directory
-      @proof_dir = @dir + '/proof'
-      begin
-        Dir.mkdir(@proof_dir)
-      rescue Errno::EEXIST
-      end
-    end
-
-    def write_proof_header
-      header_output = []
-      header_output << "［コーナー］\n#{@corner}" if @corner.is_complete?
-      header_output << "［タイトル］\n#{@title}" if @title.is_complete?
-      header_output << "［リード］\n<p>#{@lead}</p>" if @lead.is_complete?
-      header_output << "［タイトル画像］\n#{File.basename(@pic)}" if @pic.is_complete?
-      header_output << "［著者クレジット］\n#{@author}" if @author.is_complete?
-      header_output << "［追加CSS］\n#{@css}" if @css.is_complete?
-      File.open("#{@proof_dir}/header.txt", 'wb') do |f|
-        f.write(header_output.join("\n\n"))
-      end
-    end
-
-    def write_proof_body
-      File.open("#{@proof_dir}/body.txt", 'wb') do |f|
-        f.write(@converted.gsub("<!-- page_delimiter -->\n", ''))
-      end
-    end
-
-    ## Converts markdown to html and returns body
-    def convert(body, opt)
-      dkmn = Darkmouun.document.new(body, {:auto_ids => false, :entity_output => :as_input, :input => 'sekd'}, :se_html)
-
-      ### Sets templates
-      (tmpl_dir = opt[:template_dir]).nil? || dkmn.add_templates(tmpl_dir, *Dir['*.rb', base: tmpl_dir])
-
-      ### Sets pre process
-      dkmn.pre_process = lambda do |t|
-      end
-
-      ### Sets post process
-      dkmn.post_process = lambda do |t|
-        t.gsub!(/(?<!\\)&amp;null;/, '')
-        t.gsub!('(((BR)))', '<br/>')
-        t.gsub!(/■記事ID■/, @article_id)
-        t.gsub!(/—/, "―")
-        t.gsub!(/[‘’]/, "'")
-        t.gsub!(/<li>\\/, '<li>')
-        t << "</div>" if /<div id="p1">/ =~ t
-      end
-
-      ### Converts a markdown document and returns that converted body
-      dkmn.convert
-    end
   end
 end
 
