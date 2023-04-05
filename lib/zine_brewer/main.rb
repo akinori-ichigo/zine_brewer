@@ -43,7 +43,11 @@ module ZineBrewer
         t.gsub!(/—/, "―")
         t.gsub!(/[‘’]/, "'")
         t.gsub!(/<li>\\/, '<li>')
-        t << "</div>" if /<div id="p1">/ =~ t
+        if /<div id="p2">/ =~ t
+          t << "</div>"
+        else
+          t.sub!(/<div id="p1">\n/, '')
+        end
       end
     end
 
