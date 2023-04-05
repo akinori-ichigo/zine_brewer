@@ -28,7 +28,7 @@ module Kramdown
           end
         end
 
-        @block_parsers.insert(5, :column, :definition_table, :wraparound, :div, :page)
+        @block_parsers.insert(5, :column, :definition_table, :wraparound, :lineup, :div, :page)
 
         @page = 0
         @fn_counter = 0
@@ -69,17 +69,7 @@ module Kramdown
       !.map{|i| [i, i]}.flatten])
     
       def parse_div
-        if @src.check(self.class::DIV_MATCH)
-          start_line_number = @src.current_line_number
-          @src.pos += @src.matched_size
-          el = Element.new(:div, nil, nil, :location => start_line_number)
-          parse_blocks(el, @src[1])
-          update_attr_with_ial(el.attr, @block_ial) unless @block_ial.nil?
-          @tree.children << el
-          true
-        else
-          false
-        end
+        set_block("DIV_MATCH", :div)
       end
 
       DIV_MATCH = /^={3,}\s*?div\s*?\n(.*?)^={2,}\/div\s*?\n/mi
@@ -89,8 +79,14 @@ module Kramdown
         if @src.check(self.class::WRAPAROUND_MATCH)
           start_line_number = @src.current_line_number
           @src.pos += @src.matched_size
-          el = Element.new(:div, nil, {'class' => 'wraparound overflow-auto', 'style' => 'margin-bottom: 1.6rem;'}, :location => start_line_number)
-          parse_blocks(el, @src[1])
+          attributes = {'class' => "wraparound0 text-center mb-3 mb-md-2 d-md-flex flex-column col-md-#{@src[2]} " + case @src[1]
+          when /left/i
+            'float-md-start me-md-3'
+          when /right/i
+            'float-md-end ms-md-3'
+          end}
+          el = Element.new(:div, nil, attributes, :location => start_line_number)
+          parse_blocks(el, @src[3])
           update_attr_with_ial(el.attr, @block_ial) unless @block_ial.nil?
           @tree.children << el
           true
@@ -99,38 +95,40 @@ module Kramdown
         end
       end
 
-      WRAPAROUND_MATCH = /^={3,}\s*?wraparound\s*?\n(.*?)^={2,}\/wraparound\s*?\n/mi
+      WRAPAROUND_MATCH = /^={3,}\s*?wraparound\(\s*(right|left)\s*,\s*([1-9]|10|11|12)\s*\)\s*?\n(.*?)^={2,}\/wraparound\s*?\n/mi
       define_parser(:wraparound, /^={3,}wrap/i, nil, 'parse_wraparound')
 
-      def parse_column
-        if @src.check(self.class::COLUMN_MATCH)
+      def parse_lineup
+        if @src.check(self.class::LINEUP_MATCH)
           start_line_number = @src.current_line_number
           @src.pos += @src.matched_size
-          el = Element.new(:column, nil, {'class' => 'columnSection c'}, :location => start_line_number)
+          el = Element.new(:div, nil,
+                           {'class' => "lineup0 text-center mb-3 mb-md-2 d-md-flex flex-row"},
+                           :location => start_line_number)
           parse_blocks(el, @src[1])
+          el.children.filter{|i| i.type == :html_element && i.value == "figure"}[0..-2].each do |fig|
+            fig.attr.update({'class' => 'me-md-2'})
+          end
           update_attr_with_ial(el.attr, @block_ial) unless @block_ial.nil?
           @tree.children << el
           true
         else
           false
         end
+      end
+
+      LINEUP_MATCH = /^={3,}\s*?lineup\s*?\n(.*?)^={2,}\/lineup\s*?\n/mi
+      define_parser(:lineup, /^={3,}line/i, nil, 'parse_lineup')
+
+      def parse_column
+        set_block("COLUMN_MATCH", :column, {'class' => 'columnSection c'})
       end
 
       COLUMN_MATCH = /^={3,}\s*?column\s*?\n(.*?)^={2,}\/column\s*?\n/mi
       define_parser(:column, /^={3,}co/i, nil, 'parse_column')
 
       def parse_definition_table
-        if @src.check(self.class::DEFINITION_TABLE_MATCH)
-          start_line_number = @src.current_line_number
-          @src.pos += @src.matched_size
-          el = Element.new(:definition_table, nil, nil, :location => start_line_number)
-          parse_blocks(el, @src[1])
-          update_attr_with_ial(el.attr, @block_ial) unless @block_ial.nil?
-          @tree.children << el
-          true
-        else
-          false
-        end
+        set_block("DEFINITION_TABLE_MATCH", :definition_table)
       end
 
       DEFINITION_TABLE_MATCH = /^={3,}\s*?dtable\s*?\n\n*(.*?)^={2,}\/dtable\s*?\n/mi
@@ -191,6 +189,21 @@ module Kramdown
       FOOTNOTE_MARKER_START = /\[\^(#{ALD_ID_NAME})\]/
       define_parser(:footnote_marker_sekd, FOOTNOTE_MARKER_START, '\[', 'parse_footnote_marker_sekd')
 
+      private
+
+      def set_block(match_regexp_name, element, attributes = nil)
+        if @src.check(self.class.const_get(match_regexp_name))
+          start_line_number = @src.current_line_number
+          @src.pos += @src.matched_size
+          el = Element.new(element, nil, attributes, :location => start_line_number)
+          parse_blocks(el, @src[1])
+          update_attr_with_ial(el.attr, @block_ial) unless @block_ial.nil?
+          @tree.children << el
+          true
+        else
+          false
+        end
+      end
     end
   end
 end
