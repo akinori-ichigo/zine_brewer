@@ -40,7 +40,6 @@ module ZineBrewer
         t.gsub!(/(?<!\\)&amp;null;/, '')
         t.gsub!('(((BR)))', '<br/>')
         t.gsub!(/■記事ID■/, @article_id)
-        t.gsub!(/—/, "―")
         t.gsub!(/[‘’]/, "'")
         t.gsub!(/<li>\\/, '<li>')
         if /<div id="p2">/ =~ t
