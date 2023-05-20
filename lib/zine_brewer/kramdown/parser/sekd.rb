@@ -121,7 +121,7 @@ module Kramdown
       define_parser(:lineup, /^={3,}line/i, nil, 'parse_lineup')
 
       def parse_column
-        set_block("COLUMN_MATCH", :column, {'class' => 'columnSection c'})
+        set_block("COLUMN_MATCH", :column, {'class' => 'columnSection'})
       end
 
       COLUMN_MATCH = /^={3,}\s*?column\s*?\n(.*?)^={2,}\/column\s*?\n/mi
