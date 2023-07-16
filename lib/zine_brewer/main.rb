@@ -77,10 +77,11 @@ module ZineBrewer
       @pic = set_header_item(h[3], ''){|v| /^\./ =~ v ? v : "./images/#{@article_id}_#{v}" }
       @css = set_header_item(h[5], '') do |v|
         v.scan(/\s*&(.+)\s*/).flatten.each do |i|
+          v.delete!("&#{i}")
           v << (file_read_convert_utf8("#{@dir}/css/#{i}") rescue '')
         end
         v.scan(/(?:(?:\s*(?:[^,{]+)\s*,?\s*)*?){(?:(?:\s*(?:[^:]+)\s*:\s*(?:[^;]+?)\s*;\s*)*?)}\s*/).map do |i|
-          '.c-article_content ' + i unless /^@/ =~ i
+          /^@/ =~ i ? i : '.c-article_content ' + i
         end.join
       end
 
