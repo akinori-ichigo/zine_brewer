@@ -76,13 +76,12 @@ module ZineBrewer
       @corner, @title, @lead, @author = [0, 1, 2, 4].map{|i| set_header_item(h[i], '')}
       @pic = set_header_item(h[3], ''){|v| /^\./ =~ v ? v : "./images/#{@article_id}_#{v}" }
       @css = set_header_item(h[5], '') do |v|
-        v.scan(/\s*&(.+)\s*/).flatten.each do |i|
-          v.delete!("&#{i}")
-          v << (file_read_convert_utf8("#{@dir}/css/#{i}") rescue '')
+        v.gsub!(/\&[^\.]+\.css/) do |i|
+          file_read_convert_utf8("#{@dir}/css/#{i.strip.sub(/^\&\d*_*/, '')}") rescue ''
         end
-        v.scan(/(?:(?:\s*(?:[^,{]+)\s*,?\s*)*?){(?:(?:\s*(?:[^:]+)\s*:\s*(?:[^;]+?)\s*;\s*)*?)}\s*/).map do |i|
-          /^@/ =~ i ? i : '.c-article_content ' + i
-        end.join
+        v.scan(/(?:\s*@media[^{]+{\s*)|(?:\s*}\s*)|(?:(?:\s*(?:[^,{]+)\s*,?\s*)*?){(?:(?:\s*(?:[^:]+)\s*:\s*(?:[^;]+?)\s*;\s*)*?)}\s*/).map do |i|
+          /\A\s*[@}]/ =~ i ? i : '.c-article_content ' + i
+        end.join.gsub(/\n\n+/, "\n")
       end
 
       @converted = @dkmn.convert(body, {:auto_ids => false, :entity_output => :as_input, :input => 'sekd'}, :to_se_html)
