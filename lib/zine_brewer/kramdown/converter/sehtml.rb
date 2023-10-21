@@ -131,7 +131,7 @@ module Kramdown
           attr['href'] = obfuscate('mailto') << ":" << obfuscate(mail_addr)
           res = obfuscate(res) if res == mail_addr
         else
-          attr['target'] = '_blank' unless attr['href'].start_with?('#')
+          attr['target'] = '_blank' if (attr['target'].nil? && !attr['href'].start_with?('#'))
         end
         format_as_span_html(el.type, attr, res)
       end
