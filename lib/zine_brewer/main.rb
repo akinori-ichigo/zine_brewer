@@ -39,6 +39,14 @@ module ZineBrewer
       @dkmn.post_process = lambda do |t|
         t.gsub!(/(?<!\\)&amp;null;/, '')
         t.gsub!('(((BR)))', '<br/>')
+        t.gsub!(/<([^>]+?)src="(images|common|)\/?(\d+)?_?([^"]+?)"([^>]+?)>/) do |s|
+          if Regexp.last_match[2] == 'common'
+            %!<#{Regexp.last_match[1]}src="/static/images/article/common/#{Regexp.last_match[4]}"#{Regexp.last_match[5]}>!
+          else
+            aid = Regexp.last_match[3] || '■記事ID■'
+            %!<#{Regexp.last_match[1]}src="/static/images/article/#{aid}/#{aid}_#{Regexp.last_match[4]}"#{Regexp.last_match[5]}>!
+          end
+        end
         t.gsub!(/■記事ID■/, @article_id)
         t.gsub!(/[‘’]/, "'")
         t.gsub!(/<li>\\/, '<li>')
@@ -84,7 +92,7 @@ module ZineBrewer
         end.join.gsub(/\n\n+/, "\n")
       end
 
-      @converted = @dkmn.convert(body, {:auto_ids => false, :entity_output => :as_input, :input => 'sekd'}, :to_se_html)
+      @converted = @dkmn.convert(body, {:auto_ids => false, :entity_output => :as_input, :input => 'sekd', :smart_quotes => ["apos", "apos", "quot", "quot"]}, :to_se_html)
     end
 
     ## Writing out header and body as files in 'proof' directory
