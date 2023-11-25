@@ -3,7 +3,6 @@
 require 'nkf'
 require 'darkmouun'
 
-require_relative 'kramdown/utils/html'
 require_relative 'kramdown/parser/sekd'
 require_relative 'kramdown/converter/sehtml'
 
