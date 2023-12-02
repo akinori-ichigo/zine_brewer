@@ -39,13 +39,18 @@ module ZineBrewer
       @dkmn.post_process = lambda do |t|
         t.gsub!(/(?<!\\)&amp;null;/, '')
         t.gsub!('(((BR)))', '<br/>')
-        t.gsub!(/<([^>]+?)src="(images|common|)\/?(\d+)?_?([^"]+?)"([^>]+?)>/) do |s|
-          if Regexp.last_match[2] == 'common'
-            %!<#{Regexp.last_match[1]}src="/static/images/article/common/#{Regexp.last_match[4]}"#{Regexp.last_match[5]}>!
+        t.gsub!(%r'src="(?!/static)([^"]+)"') do |s|
+          mts = Regexp.last_match[1]
+          if %r!^common/! =~ mts
+            %!src="/static/images/article/#{mts}"!
           else
-            aid = Regexp.last_match[3] || '■記事ID■'
-            %!<#{Regexp.last_match[1]}src="/static/images/article/#{aid}/#{aid}_#{Regexp.last_match[4]}"#{Regexp.last_match[5]}>!
+            aid, nm = mts.match(%r!(\d+)?_?(.+)!)[1..2]
+            aid ||= '■記事ID■'
+            %!src="/static/images/article/#{aid}/#{aid}_#{nm}"!
           end
+        end
+        t.gsub!(%r!<img[^>]+hrefsrc=(".+?").+?/>!) do |s|
+          %!<a href=#{Regexp.last_match[1]} rel="lightbox" target="_blank" title="拡大画像">#{s.sub(/hrefsrc/, 'src')}</a>!
         end
         t.gsub!(/■記事ID■/, @article_id)
         t.gsub!(/[‘’]/, "'")
