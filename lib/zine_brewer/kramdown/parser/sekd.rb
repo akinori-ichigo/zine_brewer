@@ -69,10 +69,10 @@ module Kramdown
       !.map{|i| [i, i]}.flatten])
     
       def parse_div
-        set_block("DIV_MATCH", :div)
+        set_block("DIV_MATCH", :div, 2)
       end
 
-      DIV_MATCH = /^={3,}\s*?div\s*?\n(.*?)^={2,}\/div\s*?\n/mi
+      DIV_MATCH = /^={3,}\s*?div(\d*?)\s*?\n(.*?)^={2,}\/div\1\s*?\n/mi
       define_parser(:div, /^={3,}div/i, nil, 'parse_div')
 
       def parse_wraparound
@@ -121,10 +121,10 @@ module Kramdown
       define_parser(:lineup, /^={3,}line/i, nil, 'parse_lineup')
 
       def parse_column
-        set_block("COLUMN_MATCH", :column, {'class' => 'columnSection'})
+        set_block("COLUMN_MATCH", :column, 2, {'class' => 'columnSection'})
       end
 
-      COLUMN_MATCH = /^={3,}\s*?column\s*?\n(.*?)^={2,}\/column\s*?\n/mi
+      COLUMN_MATCH = /^={3,}\s*?column(\d*?)\s*?\n(.*?)^={2,}\/column\1\s*?\n/mi
       define_parser(:column, /^={3,}co/i, nil, 'parse_column')
 
       def parse_definition_table
@@ -191,12 +191,12 @@ module Kramdown
 
       private
 
-      def set_block(match_regexp_name, element, attributes = nil)
+      def set_block(match_regexp_name, element, index_to_parse = 1, attributes = nil)
         if @src.check(self.class.const_get(match_regexp_name))
           start_line_number = @src.current_line_number
           @src.pos += @src.matched_size
           el = Element.new(element, nil, attributes, :location => start_line_number)
-          parse_blocks(el, @src[1])
+          parse_blocks(el, @src[index_to_parse])
           update_attr_with_ial(el.attr, @block_ial) unless @block_ial.nil?
           @tree.children << el
           true
