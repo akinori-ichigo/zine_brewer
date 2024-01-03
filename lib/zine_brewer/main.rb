@@ -39,7 +39,7 @@ module ZineBrewer
       @dkmn.post_process = lambda do |t|
         t.gsub!(/(?<!\\)&amp;null;/, '')
         t.gsub!('(((BR)))', '<br/>')
-        t.gsub!(%r'src="(?!/static)([^"]+)"') do |s|
+        t.gsub!(%r'src="(?!/static|//)([^"]+)"') do |s|
           mts = Regexp.last_match[1]
           if %r!^common/! =~ mts
             %!src="/static/images/article/#{mts}"!
