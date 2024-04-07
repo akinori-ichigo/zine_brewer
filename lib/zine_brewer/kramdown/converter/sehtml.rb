@@ -40,31 +40,11 @@ module Kramdown
       end
 
       def convert_codeblock(el, indent)
-        raw_caption = el.attr.delete('caption')
-        caption = if raw_caption.nil?
-          ''
-        else
-          el_caption = Document.new(raw_caption, {:auto_ids => false, :input => 'sekd'}).root.children[0]
-          format_as_block_html('div', {'class' => 'caption'}, inner(el_caption, indent), indent + 2)
-        end
+        format_as_indented_block_html('div', el.attr, inner(el, indent), indent)
+      end
 
-        result = escape_html(el.value)
-        result.chomp!
-        if el.attr['class'].to_s =~ /\bshow-whitespaces\b/
-          result.gsub!(/(?:(^[ \t]+)|([ \t]+$)|([ \t]+))/) do |m|
-            suffix = ($1 ? '-l' : ($2 ? '-r' : ''))
-            m.scan(/./).map do |c|
-              case c
-              when "\t" then "<span class=\"ws-tab#{suffix}\">\t</span>"
-              when " " then "<span class=\"ws-space#{suffix}\">&#8901;</span>"
-              end
-            end.join('')
-          end
-        end
-
-        format_as_indented_block_html('div', {'class' => 'src_frame'},
-          caption + '  ' + format_as_indented_block_html('pre', {'class' => el.attr['class']}, result, indent),
-          indent)
+      def convert_pre(el, indent)
+        format_as_block_html('pre', el.attr, el.value, indent)
       end
       
       def convert_column(el, indent)

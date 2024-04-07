@@ -43,29 +43,31 @@ module Kramdown
         if @src.check(self.class::FENCED_CODEBLOCK_MATCH)
           start_line_number = @src.current_line_number
           @src.pos += @src.matched_size
-          el = new_block_el(:codeblock, @src[4].chomp, nil, :location => start_line_number)
-          lang, linenums = @src[3].to_s.strip.split(/:/)
-          lang_ext = LANG_BY_EXT[lang] || lang
-          el.attr['class'] = "prettyprint" + (lang_ext.nil? ? ' nocode' : " lang-#{lang_ext}")
-          el.attr['class'] += " linenums:#{linenums}" unless linenums.nil?
+          lang, linenums = @src[5].to_s.strip.split(/:/)
+          el = new_block_el(:codeblock, nil, {'class' => 'src_frame'}, :location => start_line_number)
+          unless @src[2].nil?
+            caption = new_block_el(:div, nil, {'class' => 'caption'})
+            caption.children << new_block_el(:raw_text, @src[2])
+            el.children << caption
+          end
+          el.children << new_block_el(:pre, @src[6].chomp, {'class' => 'prettyprint' + (lang.nil? ? '' : " lang-#{LANG_BY_EXT[lang] || lang}")})
           @tree.children << el
           true
         else
           false
         end
       end
-      FENCED_CODEBLOCK_MATCH = /^(([~`]){3,})\s*?(\w[\d:\w-]*)?\s*?\n(.*?)^\1\2*\s*?\n/m
-      define_parser(:codeblock_fenced_sekd, /^[~`]{3,}/, nil, 'parse_codeblock_fenced_sekd')
+      FENCED_CODEBLOCK_MATCH = /^(([^\n]*?)\n)?^(([~`]){3,})\s*?(\w[\d:\w-]*)?\s*?\n(.*?)^\3\4*\s*?\n/m
+      define_parser(:codeblock_fenced_sekd, /^(([^\n]*?)\n)?^[~`]{3,}/, nil, 'parse_codeblock_fenced_sekd')
 
       LANG_BY_EXT = {
-        "bash"=>"bsh", "clojure"=>"clj", "csharp"=>"cs", "c#"=>"cs", "el"=>"lisp",
-        "erl"=>"erlang", "golang"=>"go", "haskell"=>"hs", "javascript"=>"js", "obj-c"=>"m",
-        "objective-c"=>"m", "objc"=>"m", "pas"=>"pascal", "python"=>"py", "rlang"=>"r",
-        "ruby"=>"rb", "sc"=>"scala", "visualbasic"=>"vb"
+        "clojure"=>"clj", "commonlisp"=>"cl", "f#"=>"fs", "golang"=>"go", "haskell"=>"hs",
+        "visualbasic"=>"vb"
       }.merge(Hash[*%w!
-        apollo basic bsh c cc cpp clj cs csh css cyc cv dart erlang go hs htm html java js
-        llvm m matlab ml mumps mxml lisp lua n pascal perl pl pm proto py r rb rd scala sh
-        sql tcl tex vb vhdl wiki xhtml xml xq xsl yaml yml
+        Splus aea agc apollo basic cbm cl clj css dart el erl erlang ex exs fs go hs kotlin
+        lasso lassoscript latex lgt lisp ll llvm logtalk ls lua matlab ml mumps n nemerle
+        pascal proto r rd rkt rust s scala scm sql ss swift tcl tex vb vbs vhd vhdl wiki xq
+        xquery yaml yml
       !.map{|i| [i, i]}.flatten])
     
       def parse_div
