@@ -21,10 +21,11 @@ module ZineBrewer
 
   class ZineBrewer
 
-    attr_reader :corner, :title, :lead, :pic, :author, :css, :converted
+    attr_reader :corner, :title, :subtitle, :lead, :pic, :author, :css, :converted
 
-    def initialize(template_dir: nil)
+    def initialize(template_dir: nil, subtitle: false)
       @dkmn = Darkmouun.document.new
+      @subtitle_use = subtitle
 
       ### Sets templates
       template_dir.nil? || Dir['*.rb', base: template_dir].each do |t|
@@ -86,9 +87,13 @@ module ZineBrewer
                       /^\d+/.match(File.basename(@dir)).yield_self{|m| m.nil? ? '■記事ID■' : m[0]}
                     end
       h = header.strip.split(/\n\n+/)
-      @corner, @title, @lead, @author = [0, 1, 2, 4].map{|i| set_header_item(h[i], '')}
-      @pic = set_header_item(h[3], ''){|v| /^\./ =~ v ? v : "./images/#{@article_id}_#{v}" }
-      @css = set_header_item(h[5], '') do |v|
+      @corner = set_header_item(h.shift, '')
+      @title = set_header_item(h.shift, '')
+      @subtitle = set_header_item(h.shift, '') if @subtitle_use
+      @lead = set_header_item(h.shift, '')
+      @pic = set_header_item(h.shift, ''){|v| /^\./ =~ v ? v : "./images/#{@article_id}_#{v}" }
+      @author = set_header_item(h.shift, '')
+      @css = set_header_item(h.shift, '') do |v|
         v.gsub!(/\&[^\.]+\.css/) do |i|
           file_read_convert_utf8("#{@dir}/css/#{i.strip.sub(/^\&\d*_*/, '')}") rescue ''
         end
@@ -111,6 +116,7 @@ module ZineBrewer
       header_output = []
       header_output << "［コーナー］\n#{@corner}" if @corner.is_complete?
       header_output << "［タイトル］\n#{@title}" if @title.is_complete?
+      header_output << "［サブタイトル］\n#{@subtitle}" if @subtitle.is_complete?
       header_output << "［リード］\n<p>#{@lead}</p>" if @lead.is_complete?
       header_output << "［タイトル画像］\n#{File.basename(@pic)}" if @pic.is_complete?
       header_output << "［著者クレジット］\n#{@author}" if @author.is_complete?
