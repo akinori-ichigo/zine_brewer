@@ -51,6 +51,10 @@ module Kramdown
         format_as_indented_block_html('div', el.attr, inner(el, indent), indent)
       end
       
+      def convert_comment(el, indent)
+        format_as_indented_block_html('div', el.attr, inner(el, indent), indent)
+      end
+      
       # Makes caption element from caption attr of table element.
       def table_caption(raw_caption)
         el_caption = Document.new(raw_caption, {:auto_ids => false, :input => 'sekd'}).root.children[0]

@@ -28,7 +28,7 @@ module Kramdown
           end
         end
 
-        @block_parsers.insert(5, :column, :definition_table, :wraparound, :lineup, :div, :page)
+        @block_parsers.insert(5, :column, :comment, :definition_table, :wraparound, :lineup, :div, :page)
         @block_parsers.insert(-2, :kakokiji)
 
         @page = 0
@@ -133,7 +133,14 @@ module Kramdown
       end
 
       COLUMN_MATCH = /^={3,}\s*?column(\d*?)\s*?\n(.*?)^={2,}\/column\1\s*?\n/mi
-      define_parser(:column, /^={3,}co/i, nil, 'parse_column')
+      define_parser(:column, /^={3,}column/i, nil, 'parse_column')
+
+      def parse_comment
+        set_block("COMMENT_MATCH", :comment, 2, {'class' => 'columnSection comment'})
+      end
+
+      COMMENT_MATCH = /^={3,}\s*?comment(\d*?)\s*?\n(.*?)^={2,}\/comment\1\s*?\n/mi
+      define_parser(:comment, /^={3,}comment/i, nil, 'parse_comment')
 
       def parse_definition_table
         set_block("DEFINITION_TABLE_MATCH", :definition_table)
