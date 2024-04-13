@@ -87,6 +87,10 @@ module Kramdown
         result.sub(/<dt>\\/, '<dt>')
       end
 
+      def convert_kakokiji(el, indent)
+        "<kakokiji>#{el.value.strip}</kakokiji>\n\n"
+      end
+
       def convert_div(el, indent)
         format_as_indented_block_html('div', el.attr, inner(el, indent), indent)
       end

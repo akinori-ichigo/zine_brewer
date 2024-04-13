@@ -29,6 +29,7 @@ module Kramdown
         end
 
         @block_parsers.insert(5, :column, :definition_table, :wraparound, :lineup, :div, :page)
+        @block_parsers.insert(-2, :kakokiji)
 
         @page = 0
         @fn_counter = 0
@@ -76,6 +77,20 @@ module Kramdown
 
       DIV_MATCH = /^={3,}\s*?div(\d*?)\s*?\n(.*?)^={2,}\/div\1\s*?\n/mi
       define_parser(:div, /^={3,}div/i, nil, 'parse_div')
+
+      def parse_kakokiji
+        if @src.check(self.class::KAKOKIJI_MATCH)
+          start_line_number = @src.current_line_number
+          @src.pos += @src.matched_size
+          @tree.children << new_block_el(:kakokiji, @src[1], nil, :location => start_line_number)
+          true
+        else
+          false
+        end
+      end
+
+      KAKOKIJI_MATCH = /^\[%kakokiji:\s*?(.*?)\]/
+      define_parser(:kakokiji, /^\[%kakokiji/, nil, 'parse_kakokiji')
 
       def parse_wraparound
         if @src.check(self.class::WRAPAROUND_MATCH)
