@@ -127,7 +127,7 @@ module ZineBrewer
 
       File.open("#{proof_dir}/body.txt", 'wb') do |f|
         f.write(@converted.gsub("<!-- page_delimiter -->\n", '')
-                          .gsub(/<kakokiji>(.+?)<\/kakokiji>/, "[\\1]"))
+                          .gsub(/<kakokiji>(.+?)<\/kakokiji>/, "<p>[\\1]</p>"))
       end
     end
 
