@@ -52,7 +52,7 @@ module Kramdown
             el.children << caption
           end
           el.children << new_block_el(:pre, @src[6].chomp, {'class' => 'prettyprint' +
-                                                            (@src[5].match(/linenums|ln/) ? " linenums" : '')})
+                                                            ((@src[5].match(/linenums|ln/) ? ' linenums' : '') rescue '')})
           @tree.children << el
           true
         else
