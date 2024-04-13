@@ -50,9 +50,9 @@ module ZineBrewer
             %!src="/static/images/article/#{aid}/#{aid}_#{nm}"!
           end
         end
-        t.gsub!(%r!<img[^>]+hrefsrc=(".+?").+?/>!) do |s|
-          %!<a href=#{Regexp.last_match[1]} rel="lightbox" target="_blank" title="拡大画像">#{s.sub(/hrefsrc/, 'src')}</a>!
-        end
+        # t.gsub!(%r!<img[^>]+hrefsrc=(".+?").+?/>!) do |s|
+        #   %!<a href=#{Regexp.last_match[1]} rel="lightbox" target="_blank" title="拡大画像">#{s.sub(/hrefsrc/, 'src')}</a>!
+        # end
         t.gsub!(/■記事ID■/, @article_id)
         t.gsub!(/[‘’]/, "'")
         t.gsub!(/<li>\\/, '<li>')
@@ -126,15 +126,17 @@ module ZineBrewer
       end
 
       File.open("#{proof_dir}/body.txt", 'wb') do |f|
-        f.write(@converted.gsub("<!-- page_delimiter -->\n", ''))
+        f.write(@converted.gsub("<!-- page_delimiter -->\n", '')
+                          .gsub(/<kakokiji>(.+?)<\/kakokiji>/, "[\\1]"))
       end
     end
 
     private
 
     def file_read_convert_utf8(path)
-      _doc = File.open(path, 'rt'){|f| f.read }
-      _doc.force_encoding(NKF.guess(_doc)).encode('utf-8')
+      _exc = NKF.guess(File.open(path, 'r'){|f| f.read })
+      _enc = _exc == Encoding::UTF_8 ? "BOM|#{_enc.to_s}" : _exc.to_s
+      File.open(path, "rt:#{_enc}:UTF-8"){|f| f.read }
     end
 
     def set_header_item(value, alt)
