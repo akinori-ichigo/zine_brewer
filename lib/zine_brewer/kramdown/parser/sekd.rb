@@ -51,7 +51,8 @@ module Kramdown
             caption.children << new_block_el(:raw_text, @src[2])
             el.children << caption
           end
-          el.children << new_block_el(:pre, @src[6].chomp, {'class' => 'prettyprint' + (lang.nil? ? '' : " lang-#{LANG_BY_EXT[lang] || lang}")})
+          el.children << new_block_el(:pre, @src[6].chomp, {'class' => 'prettyprint' +
+                                                            (@src[5].match(/linenums|ln/) ? " linenums" : '')})
           @tree.children << el
           true
         else
@@ -61,16 +62,6 @@ module Kramdown
       FENCED_CODEBLOCK_MATCH = /^(([^\n]*?)\n)?^(([~`]){3,})\s*?(\w[\d:\w-]*)?\s*?\n(.*?)^\3\4*\s*?\n/m
       define_parser(:codeblock_fenced_sekd, /^(([^\n]*?)\n)?^[~`]{3,}/, nil, 'parse_codeblock_fenced_sekd')
 
-      LANG_BY_EXT = {
-        "clojure"=>"clj", "commonlisp"=>"cl", "f#"=>"fs", "golang"=>"go", "haskell"=>"hs",
-        "visualbasic"=>"vb"
-      }.merge(Hash[*%w!
-        Splus aea agc apollo basic cbm cl clj css dart el erl erlang ex exs fs go hs kotlin
-        lasso lassoscript latex lgt lisp ll llvm logtalk ls lua matlab ml mumps n nemerle
-        pascal proto r rd rkt rust s scala scm sql ss swift tcl tex vb vbs vhd vhdl wiki xq
-        xquery yaml yml
-      !.map{|i| [i, i]}.flatten])
-    
       def parse_div
         set_block("DIV_MATCH", :div, 2)
       end
