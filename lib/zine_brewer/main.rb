@@ -116,7 +116,7 @@ module ZineBrewer
       header_output = []
       header_output << "［コーナー］\n#{@corner}" if @corner.is_complete?
       header_output << "［タイトル］\n#{@title}" if @title.is_complete?
-      header_output << "［サブタイトル］\n#{@subtitle}" if @subtitle.is_complete?
+      header_output << "［サブタイトル］\n#{@subtitle}" if @subtitle && @subtitle.is_complete?
       header_output << "［リード］\n<p>#{@lead}</p>" if @lead.is_complete?
       header_output << "［タイトル画像］\n#{File.basename(@pic)}" if @pic.is_complete?
       header_output << "［著者クレジット］\n#{@author}" if @author.is_complete?
