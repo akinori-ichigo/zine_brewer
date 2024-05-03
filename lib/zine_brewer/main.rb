@@ -40,7 +40,7 @@ module ZineBrewer
       @dkmn.post_process = lambda do |t|
         t.gsub!(/(?<!\\)&amp;null;/, '')
         t.gsub!('(((BR)))', '<br/>')
-        t.gsub!(%r'src="(?!/static|//)([^"]+)"') do |s|
+        t.gsub!(%r'src="(?!/static|//|http)([^"]+)"') do |s|
           mts = Regexp.last_match[1]
           if %r!^common/! =~ mts
             %!src="/static/images/article/#{mts}"!
@@ -50,9 +50,6 @@ module ZineBrewer
             %!src="/static/images/article/#{aid}/#{aid}_#{nm}"!
           end
         end
-        # t.gsub!(%r!<img[^>]+hrefsrc=(".+?").+?/>!) do |s|
-        #   %!<a href=#{Regexp.last_match[1]} rel="lightbox" target="_blank" title="拡大画像">#{s.sub(/hrefsrc/, 'src')}</a>!
-        # end
         t.gsub!(/■記事ID■/, @article_id)
         t.gsub!(/[‘’]/, "'")
         t.gsub!(/<li>\\/, '<li>')
