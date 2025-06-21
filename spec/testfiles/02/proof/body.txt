@@ -1,13 +1,11 @@
-<div id="p1">
-  <table>
-    <caption>講座の概要</caption>
-    <tr>
-      <th width="20%">講座名</th>
-      <td>エンジニア採用に効く「求人票」の書き方入門 〜ITエンジニアリングの基本も解説〜</td>
-    </tr>
-    <tr>
-      <th width="20%">開催日時</th>
-      <td>2021年9月22日(水) 10:00〜17:30</td>
-    </tr>
-  </table>
-</div>
+<table>
+  <caption>講座の概要</caption>
+  <tr>
+    <th width="20%">講座名</th>
+    <td>エンジニア採用に効く「求人票」の書き方入門 〜ITエンジニアリングの基本も解説〜</td>
+  </tr>
+  <tr>
+    <th width="20%">開催日時</th>
+    <td>2021年9月22日(水) 10:00〜17:30</td>
+  </tr>
+</table>

@@ -8,7 +8,7 @@
 </div>
 <div id="p2">
   <h3>レベル3 見出し</h3>
-  <div class="columnSection c">
+  <div class="columnSection">
     <h4>書名の由来</h4>
     <p>　「枕草子」という書名全体についていえば、この作品がこの書名で呼ばれるようになった当時において「枕草子」は一般名詞であった。『枕草子』の執筆動機等については巻末の跋文によって推量するほかなく、それによれば執筆の動機および命名の由来は、内大臣伊周が妹中宮定子と一条天皇に当時まだ高価だった料紙を献上したとき、「帝の方は『史記』を書写されたが、こちらは何を書こうか」という定子の下問を受けた清少納言が、「枕にこそは侍らめ」（三巻本系による、なお能因本欠本は「枕にこそはし侍らめ」、能因本完本は「これ給いて枕にし侍らばや」、堺本と前田本には該当記事なし）と即答し、「ではおまえに与えよう」とそのまま紙を下賜されたと記されている。「枕草子」の名もそこから来るというのが通説であるが、肝心の枕とは何を意味するのかについては、古来より研究者の間で論争が続き、いまだに解決を見ない。</p>
   </div>
@@ -37,7 +37,7 @@
       </td>
     </tr>
   </table>
-  <div class="overflow-auto" style="margin-bottom: 1.6rem;">
+  <div class="wraparound0 text-center mb-3 mb-md-2 d-md-flex flex-column col-md-6 float-md-end ms-md-3">
     <figure>
       <img src="/static/images/article/1234/1234_seishonagon.jpg" alt="清少納言" style="width:110px;" loading="lazy" />
       <figcaption>清少納言</figcaption>

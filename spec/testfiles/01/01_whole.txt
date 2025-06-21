@@ -54,7 +54,7 @@ p.pop { background-color: pink; }
    * うつくしきもの
 ==/dtable
 
-===wraparound
+===wraparound(right, 6)
 ![清少納言](seishonagon.jpg){:standalone %width:110px;}
 
   平安時代中期の作家、歌人。随筆『[枕草子](https://ja.wikipedia.org/wiki/%E6%9E%95%E8%8D%89%E5%AD%90)』は平安文学の代表作の一つ。梨壺の五人の一人にして著名歌人であった清原元輔（908年 - 990年）の娘。
