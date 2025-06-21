@@ -1,6 +1,6 @@
 # coding: utf-8
 
-require 'nkf'
+require 'rchardet'
 require 'darkmouun'
 
 require_relative 'kramdown/parser/sekd'
@@ -131,8 +131,8 @@ module ZineBrewer
     private
 
     def file_read_convert_utf8(path)
-      _exc = NKF.guess(File.open(path, 'r'){|f| f.read })
-      _enc = _exc == Encoding::UTF_8 ? "BOM|#{_enc.to_s}" : _exc.to_s
+      _exc = Encoding.find(CharDet.detect(File.open(path, 'r'){|f| f.read })['encoding'])
+      _enc = _exc == Encoding::UTF_8 ? "BOM|#{_exc.to_s}" : _exc.to_s
       File.open(path, "rt:#{_enc}:UTF-8"){|f| f.read }
     end
 
