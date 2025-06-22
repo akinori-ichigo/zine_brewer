@@ -80,7 +80,7 @@ module Kramdown
         end
       end
 
-      KAKOKIJI_MATCH = /^\[%kakokiji:\s*?(.*?)\]/
+      KAKOKIJI_MATCH = /^\[%kakokiji:\s*?([^\]]*?)\]/
       define_parser(:kakokiji, /^\[%kakokiji/, nil, 'parse_kakokiji')
 
       def parse_wraparound
