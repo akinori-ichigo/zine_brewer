@@ -87,7 +87,7 @@ module Kramdown
         if @src.check(self.class::WRAPAROUND_MATCH)
           start_line_number = @src.current_line_number
           @src.pos += @src.matched_size
-          attributes = {'class' => "wraparound0 text-center mb-3 mb-md-2 d-md-flex flex-column col-md-#{@src[2]} " + case @src[1]
+          attributes = {'class' => "wraparound text-center mb-3 mb-md-2 d-md-flex flex-column col-md-#{@src[2]} " + case @src[1]
           when /left/i
             'float-md-start me-md-3'
           when /right/i
@@ -111,7 +111,7 @@ module Kramdown
           start_line_number = @src.current_line_number
           @src.pos += @src.matched_size
           el = Element.new(:div, nil,
-                           {'class' => "lineup0 text-center mb-3 mb-md-2 d-md-flex flex-row"},
+                           {'class' => "lineup text-center mb-3 mb-md-2 d-md-flex flex-row"},
                            :location => start_line_number)
           parse_blocks(el, @src[1])
           el.children.filter{|i| i.type == :html_element && i.value == "figure"}[0..-2].each do |fig|
