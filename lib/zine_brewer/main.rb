@@ -91,11 +91,13 @@ module ZineBrewer
       @pic = set_header_item(h.shift, ''){|v| /^\./ =~ v ? v : "./images/#{@article_id}_#{v}" }
       @author = set_header_item(h.shift, '')
       @css = set_header_item(h.shift, '') do |v|
-        v.gsub!(/\&[^\.]+\.css/) do |i|
-          file_read_convert_utf8("#{@dir}/css/#{i.strip.sub(/^\&\d*_*/, '')}") rescue ''
-        end
         v.scan(/(?:\s*@media[^{]+{\s*)|(?:\s*}\s*)|(?:(?:\s*(?:[^,{]+)\s*,?\s*)*?){(?:(?:\s*(?:[^:]+)\s*:\s*(?:[^;]+?)\s*;\s*)*?)}\s*/).map do |i|
-          /\A\s*[@}]/ =~ i ? i : '.c-article_content ' + i
+          /\A\s*[@}]/ =~ i ? i : i.yield_self {|j|
+            j.gsub!(%r|\A\s*/\*.+?\*/\s*|,'')
+            j.gsub!(%r|\s*/\*.+?\*/|,'')
+            sl = j.slice(/[^{]+/)
+            sl.lines("\n").map{|m| '.c-article_content ' + m}.join + j.slice(sl.length..)
+          }
         end.join.gsub(/\n\n+/, "\n")
       end
 
